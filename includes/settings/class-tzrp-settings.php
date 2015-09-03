@@ -1,23 +1,23 @@
 <?php
 /***
- * TZBA Settings Class
+ * TZRP Settings Class
  *
  * Registers all plugin settings with the WordPress Settings API.
  * Handles license key activation with the ThemeZee Store API.
  *
  * @link https://codex.wordpress.org/Settings_API
- * @package ThemeZee Boilerplate Addon
+ * @package ThemeZee Related Posts
  */
 
 
  /* Use class to avoid namespace collisions */
-if ( ! class_exists('TZBA_Settings') ) :
+if ( ! class_exists('TZRP_Settings') ) :
 
-class TZBA_Settings {
+class TZRP_Settings {
 	/** Singleton *************************************************************/
 
 	/**
-	 * @var instance The one true TZBA_Settings instance
+	 * @var instance The one true TZRP_Settings instance
 	 */
 	private static $instance;
 	
@@ -29,7 +29,7 @@ class TZBA_Settings {
 	/**
      * Creates or returns an instance of this class.
      *
-     * @return TZBA_Settings A single instance of this class.
+     * @return TZRP_Settings A single instance of this class.
      */
 	public static function instance() {
  
@@ -56,7 +56,7 @@ class TZBA_Settings {
 		$this->options = wp_parse_args( 
 			
 			// Get saved theme options from WP database
-			get_option( 'tzba_settings' , array() ), 
+			get_option( 'tzrp_settings' , array() ), 
 			
 			// Merge with Default Settings if setting was not saved yet
 			$this->default_settings()
@@ -121,14 +121,14 @@ class TZBA_Settings {
 	function register_settings() {
 
 		// Make sure that options exist in database
-		if ( false == get_option( 'tzba_settings' ) ) {
-			add_option( 'tzba_settings' );
+		if ( false == get_option( 'tzrp_settings' ) ) {
+			add_option( 'tzrp_settings' );
 		}
 		
 		// Add Sections
-		add_settings_section( 'tzba_settings_example_one', __('Example 1', 'themezee-boilerplate-addon' ), '__return_false', 'tzba_settings' );
-		add_settings_section( 'tzba_settings_example_two', __('Example 2', 'themezee-boilerplate-addon' ), '__return_false', 'tzba_settings' );
-		add_settings_section( 'tzba_settings_license', __('License', 'themezee-boilerplate-addon'), '__return_false', 'tzba_settings' );
+		add_settings_section( 'tzrp_settings_example_one', __('Example 1', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
+		add_settings_section( 'tzrp_settings_example_two', __('Example 2', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
+		add_settings_section( 'tzrp_settings_license', __('License', 'themezee-related-posts'), '__return_false', 'tzrp_settings' );
 		
 		// Add Settings
 		foreach ( $this->get_registered_settings() as $key => $option ) :
@@ -137,11 +137,11 @@ class TZBA_Settings {
 			$section = isset( $option['section'] ) ? $option['section'] : 'widgets';
 			
 			add_settings_field(
-				'tzba_settings[' . $key . ']',
+				'tzrp_settings[' . $key . ']',
 				$name,
 				is_callable( array( $this, $option[ 'type' ] . '_callback' ) ) ? array( $this, $option[ 'type' ] . '_callback' ) : array( $this, 'missing_callback' ),
-				'tzba_settings',
-				'tzba_settings_' . $section,
+				'tzrp_settings',
+				'tzrp_settings_' . $section,
 				array(
 					'id'      => $key,
 					'name'    => isset( $option['name'] ) ? $option['name'] : null,
@@ -158,7 +158,7 @@ class TZBA_Settings {
 		endforeach;
 
 		// Creates our settings in the options table
-		register_setting( 'tzba_settings', 'tzba_settings', array( $this, 'sanitize_settings' ) );
+		register_setting( 'tzrp_settings', 'tzrp_settings', array( $this, 'sanitize_settings' ) );
 	}
 
 	/**
@@ -172,7 +172,7 @@ class TZBA_Settings {
 			return $input;
 		}
 
-		$saved    = get_option( 'tzba_settings', array() );
+		$saved    = get_option( 'tzrp_settings', array() );
 		if( ! is_array( $saved ) ) {
 			$saved = array();
 		}
@@ -265,97 +265,97 @@ class TZBA_Settings {
 
 		$settings = array(
 			'textfield' => array(
-				'name' =>  __('Textfield', 'themezee-boilerplate-addon'),
-				'desc' => __('Displays a textfield setting. ', 'themezee-boilerplate-addon'),
+				'name' =>  __('Textfield', 'themezee-related-posts'),
+				'desc' => __('Displays a textfield setting. ', 'themezee-related-posts'),
 				'section' => 'example_one',
 				'type' => 'text',
 				'size' => 'regular' // Delete that line for normal text field
 			),
 			'textfield_small' => array(
-				'name' =>  __('Textfield Small', 'themezee-boilerplate-addon'),
-				'desc' => __('Displays a small textfield setting. ', 'themezee-boilerplate-addon'),
+				'name' =>  __('Textfield Small', 'themezee-related-posts'),
+				'desc' => __('Displays a small textfield setting. ', 'themezee-related-posts'),
 				'section' => 'example_one',
 				'type' => 'text',
 				'size' => 'small',
 				'default' => ''
 			),
 			'textfield_large' => array(
-				'name' =>  __('Textfield Large', 'themezee-boilerplate-addon'),
-				'desc' => __('Displays a large textfield setting. ', 'themezee-boilerplate-addon'),
+				'name' =>  __('Textfield Large', 'themezee-related-posts'),
+				'desc' => __('Displays a large textfield setting. ', 'themezee-related-posts'),
 				'section' => 'example_one',
 				'type' => 'text',
 				'size' => 'large',
 				'default' => ''
 			),
 			'radio_button' => array(
-				'name' =>  __('Radio Buttons', 'themezee-boilerplate-addon'),
-				'desc' => __('Shows an example radio button control. ', 'themezee-boilerplate-addon'),
+				'name' =>  __('Radio Buttons', 'themezee-related-posts'),
+				'desc' => __('Shows an example radio button control. ', 'themezee-related-posts'),
 				'section' => 'example_one',
 				'type' => 'radio',
 				'options' => array(	
-					'radio_1' => __('Radio Setting 1', 'themezee-boilerplate-addon'),	
-					'radio_2' => __('Radio Setting 2', 'themezee-boilerplate-addon'),	
-					'radio_3' => __('Radio Setting 3', 'themezee-boilerplate-addon')
+					'radio_1' => __('Radio Setting 1', 'themezee-related-posts'),	
+					'radio_2' => __('Radio Setting 2', 'themezee-related-posts'),	
+					'radio_3' => __('Radio Setting 3', 'themezee-related-posts')
 				),
 				'default' => 'radio_2'
 			),
 			'checkbox' => array(
-				'name' =>  __('Checkbox', 'themezee-boilerplate-addon'),
-				'desc' => __('Displays an example checkbox (default = true). ', 'themezee-boilerplate-addon'),
+				'name' =>  __('Checkbox', 'themezee-related-posts'),
+				'desc' => __('Displays an example checkbox (default = true). ', 'themezee-related-posts'),
 				'section' => 'example_one',
 				'type' => 'checkbox',
 				'default' => true
 			),
 			'checkbox_2' => array(
-				'name' =>  __('Checkbox 2', 'themezee-boilerplate-addon'),
-				'desc' => __('Displays a second example checkbox (default = false). ', 'themezee-boilerplate-addon'),
+				'name' =>  __('Checkbox 2', 'themezee-related-posts'),
+				'desc' => __('Displays a second example checkbox (default = false). ', 'themezee-related-posts'),
 				'section' => 'example_one',
 				'type' => 'checkbox',
 				'default' => false
 			),
 			'textarea' => array(
-				'name' =>  __('Textarea', 'themezee-boilerplate-addon'),
-				'desc' => __('Displays a textarea. ', 'themezee-boilerplate-addon'),
+				'name' =>  __('Textarea', 'themezee-related-posts'),
+				'desc' => __('Displays a textarea. ', 'themezee-related-posts'),
 				'section' => 'example_one',
 				'type' => 'textarea',
 				'size' => 'large',
-				'default' => __('Default Text', 'themezee-boilerplate-addon')	
+				'default' => __('Default Text', 'themezee-related-posts')	
 			),
 			'textarea_html' => array(
-				'name' =>  __('Textarea HTML', 'themezee-boilerplate-addon'),
-				'desc' => __('Displays a HTML textarea. ', 'themezee-boilerplate-addon'),
+				'name' =>  __('Textarea HTML', 'themezee-related-posts'),
+				'desc' => __('Displays a HTML textarea. ', 'themezee-related-posts'),
 				'section' => 'example_one',
 				'type' => 'textarea_html',
 				'size' => 'large',
-				'default' => __('Default HTML', 'themezee-boilerplate-addon')	
+				'default' => __('Default HTML', 'themezee-related-posts')	
 			),
 			'select_field' => array(
-				'name' =>  __('Select Field', 'themezee-boilerplate-addon'),
-				'desc' => __('Shows an example select field control. ', 'themezee-boilerplate-addon'),
+				'name' =>  __('Select Field', 'themezee-related-posts'),
+				'desc' => __('Shows an example select field control. ', 'themezee-related-posts'),
 				'section' => 'example_two',
 				'type' => 'select',
 				'options' => array(	
-					'select_1' => __('Select Setting 1', 'themezee-boilerplate-addon'),	
-					'select_2' => __('Select Setting 2', 'themezee-boilerplate-addon'),	
-					'select_3' => __('Select Setting 3', 'themezee-boilerplate-addon')
+					'select_1' => __('Select Setting 1', 'themezee-related-posts'),	
+					'select_2' => __('Select Setting 2', 'themezee-related-posts'),	
+					'select_3' => __('Select Setting 3', 'themezee-related-posts')
 				),
 				'default' => 'select_3'
 			),
 			'multicheck' => array(
-				'name' => __( 'Multi Checkbox', 'themezee-boilerplate-addon' ),
-				'desc' => __( 'Select multiple checkboxes.', 'themezee-boilerplate-addon' ),
+				'name' => __( 'Multi Checkbox', 'themezee-related-posts' ),
+				'desc' => __( 'Select multiple checkboxes.', 'themezee-related-posts' ),
 				'section' => 'example_two',
 				'type' => 'multicheck',
 				'options' => array(	
-					'check_1' => __('Checkbox Setting 1', 'themezee-boilerplate-addon'),	
-					'check_2' => __('Checkbox Setting 2', 'themezee-boilerplate-addon'),	
-					'check_3' => __('Checkbox Setting 3', 'themezee-boilerplate-addon')
+					'check_1' => __('Checkbox Setting 1', 'themezee-related-posts'),	
+					'check_2' => __('Checkbox Setting 2', 'themezee-related-posts'),	
+					'check_3' => __('Checkbox Setting 3', 'themezee-related-posts')
 				),
 				'default' => true
 			),
 			'number' => array(
-				'name' =>  __('Number', 'themezee-boilerplate-addon'),
-				'desc' => __('Example number setting', 'themezee-boilerplate-addon'),
+				'name' =>  __('Number', 'themezee-related-posts'),
+				'desc' => __('Example number setting', 'themezee-related-posts'),
 				'section' => 'example_two',
 				'type' => 'number',
 				'max' => 80,
@@ -364,35 +364,35 @@ class TZBA_Settings {
 				'default' => 4
 			),
 			'upload' => array(
-				'name' =>  __('File Upload', 'themezee-boilerplate-addon'),
-				'desc' => __('Example uploader', 'themezee-boilerplate-addon'),
+				'name' =>  __('File Upload', 'themezee-related-posts'),
+				'desc' => __('Example uploader', 'themezee-related-posts'),
 				'section' => 'example_two',
 				'type' => 'upload',
 				'default' => ''
 			),
 			'missing' => array(
-				'name' =>  __('Missing Callback', 'themezee-boilerplate-addon'),
-				'desc' => __('No Setting exists for that type', 'themezee-boilerplate-addon'),
+				'name' =>  __('Missing Callback', 'themezee-related-posts'),
+				'desc' => __('No Setting exists for that type', 'themezee-related-posts'),
 				'section' => 'example_two',
 				'type' => 'blablub',
 				'default' => ''
 			),
 			'editor' => array(
-				'name' =>  __('Editor', 'themezee-boilerplate-addon'),
+				'name' =>  __('Editor', 'themezee-related-posts'),
 				'section' => 'example_two',
 				'type' => 'rich_editor',
 				'default' => ''
 			),
 			'license_key' => array(
-				'name' => __( 'License Key', 'themezee-boilerplate-addon' ),
-				'desc' => sprintf( __( 'Please enter your license key. An active license key is needed for automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-boilerplate-addon' ), 'http://themezee.com/support/' ),
+				'name' => __( 'License Key', 'themezee-related-posts' ),
+				'desc' => sprintf( __( 'Please enter your license key. An active license key is needed for automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-related-posts' ), 'http://themezee.com/support/' ),
 				'section' => 'license',
 				'type' => 'license',
 				'default' => ''
 			)
 		);
 
-		return apply_filters( 'tzba_settings', $settings );
+		return apply_filters( 'tzrp_settings', $settings );
 	}
 
 	/**
@@ -401,14 +401,14 @@ class TZBA_Settings {
 	 * Renders checkboxes.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @return void
 	 */
 	function checkbox_callback( $args ) {
 
 		$checked = isset($this->options[$args['id']]) ? checked(1, $this->options[$args['id']], false) : '';
-		$html = '<input type="checkbox" id="tzba_settings[' . $args['id'] . ']" name="tzba_settings[' . $args['id'] . ']" value="1" ' . $checked . '/>';
-		$html .= '<label for="tzba_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
+		$html = '<input type="checkbox" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="1" ' . $checked . '/>';
+		$html .= '<label for="tzrp_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
 
 		echo $html;
 	}
@@ -419,7 +419,7 @@ class TZBA_Settings {
 	 * Renders multiple checkboxes.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @return void
 	 */
 	function multicheck_callback( $args ) {
@@ -427,8 +427,8 @@ class TZBA_Settings {
 		if ( ! empty( $args['options'] ) ) :
 			foreach( $args['options'] as $key => $option ) {
 				$checked = isset($this->options[$args['id']][$key]) ? checked(1, $this->options[$args['id']][$key], false) : '';
-				echo '<input name="tzba_settings[' . $args['id'] . '][' . $key . ']" id="tzba_settings[' . $args['id'] . '][' . $key . ']" type="checkbox" value="1" ' . $checked . '/>&nbsp;';
-				echo '<label for="tzba_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
+				echo '<input name="tzrp_settings[' . $args['id'] . '][' . $key . ']" id="tzrp_settings[' . $args['id'] . '][' . $key . ']" type="checkbox" value="1" ' . $checked . '/>&nbsp;';
+				echo '<label for="tzrp_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
 			}
 		endif;
 		echo '<p class="description">' . $args['desc'] . '</p>';
@@ -441,7 +441,7 @@ class TZBA_Settings {
 	 * Renders text fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @return void
 	 */
 	function text_callback( $args ) {
@@ -452,7 +452,7 @@ class TZBA_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="text" class="' . $size . '-text" id="tzba_settings[' . $args['id'] . ']" name="tzba_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+		$html = '<input type="text" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
@@ -465,7 +465,7 @@ class TZBA_Settings {
 	 * Renders radio boxes.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @return void
 	 */
 	function radio_callback( $args ) {
@@ -479,8 +479,8 @@ class TZBA_Settings {
 				elseif( isset( $args['default'] ) && $args['default'] == $key && ! isset( $this->options[ $args['id'] ] ) )
 					$checked = true;
 
-				echo '<input name="tzba_settings[' . $args['id'] . ']"" id="tzba_settings[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(true, $checked, false) . '/>&nbsp;';
-				echo '<label for="tzba_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
+				echo '<input name="tzrp_settings[' . $args['id'] . ']"" id="tzrp_settings[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(true, $checked, false) . '/>&nbsp;';
+				echo '<label for="tzrp_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
 			endforeach;
 		endif;
 		echo '<p class="description">' . $args['desc'] . '</p>';
@@ -493,7 +493,7 @@ class TZBA_Settings {
 	 * Renders license key fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @return void
 	 */
 	function license_callback( $args ) {
@@ -504,19 +504,19 @@ class TZBA_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="text" class="' . $size . '-text" id="tzba_settings[' . $args['id'] . ']" name="tzba_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+		$html = '<input type="text" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 		$license_status = $this->get( 'license_status' );
 		$license_key = ! empty( $value ) ? $value : false;
 
 		if( 'valid' === $license_status && ! empty( $license_key ) ) {
-			$html .= '<input type="submit" class="button" name="tzba_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-boilerplate-addon' ) . '"/>';
-			$html .= '<span style="color:green;">&nbsp;' . __( 'Your license is valid!', 'themezee-boilerplate-addon' ) . '</span>';
+			$html .= '<input type="submit" class="button" name="tzrp_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-related-posts' ) . '"/>';
+			$html .= '<span style="color:green;">&nbsp;' . __( 'Your license is valid!', 'themezee-related-posts' ) . '</span>';
 		} elseif( 'expired' === $license_status && ! empty( $license_key ) ) {
 			$renewal_url = esc_url( add_query_arg( array( 'edd_license_key' => $license_key, 'download_id' => 17 ), 'https://affiliatewp.com/checkout' ) );
-			$html .= '<a href="' . esc_url( $renewal_url ) . '" class="button-primary">' . __( 'Renew Your License', 'themezee-boilerplate-addon' ) . '</a>';
-			$html .= '<br/><span style="color:red;">&nbsp;' . __( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-boilerplate-addon' ) . '</span>';
+			$html .= '<a href="' . esc_url( $renewal_url ) . '" class="button-primary">' . __( 'Renew Your License', 'themezee-related-posts' ) . '</a>';
+			$html .= '<br/><span style="color:red;">&nbsp;' . __( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-related-posts' ) . '</span>';
 		} else {
-			$html .= '<input type="submit" class="button" name="tzba_activate_license" value="' . esc_attr__( 'Activate License', 'themezee-boilerplate-addon' ) . '"/>';
+			$html .= '<input type="submit" class="button" name="tzrp_activate_license" value="' . esc_attr__( 'Activate License', 'themezee-related-posts' ) . '"/>';
 		}
 
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
@@ -530,7 +530,7 @@ class TZBA_Settings {
 	 * Renders number fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @return void
 	 */
 	function number_callback( $args ) {
@@ -545,7 +545,7 @@ class TZBA_Settings {
 		$step = isset( $args['step'] ) ? $args['step'] : 1;
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="tzba_settings[' . $args['id'] . ']" name="tzba_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+		$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
@@ -557,7 +557,7 @@ class TZBA_Settings {
 	 * Renders textarea fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @return void
 	 */
 	function textarea_callback( $args ) {
@@ -568,7 +568,7 @@ class TZBA_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzba_settings_' . $args['id'] . '" name="tzba_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
+		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzrp_settings_' . $args['id'] . '" name="tzrp_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
@@ -580,7 +580,7 @@ class TZBA_Settings {
 	 * Renders textarea fields which allow HTML code.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @return void
 	 */
 	function textarea_html_callback( $args ) {
@@ -591,7 +591,7 @@ class TZBA_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzba_settings_' . $args['id'] . '" name="tzba_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
+		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzrp_settings_' . $args['id'] . '" name="tzrp_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
@@ -608,7 +608,7 @@ class TZBA_Settings {
 	 * @return void
 	 */
 	function missing_callback($args) {
-		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-boilerplate-addon' ), $args['id'] );
+		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-related-posts' ), $args['id'] );
 	}
 
 	/**
@@ -617,7 +617,7 @@ class TZBA_Settings {
 	 * Renders select fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @return void
 	 */
 	function select_callback($args) {
@@ -627,7 +627,7 @@ class TZBA_Settings {
 		else
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
-		$html = '<select id="tzba_settings[' . $args['id'] . ']" name="tzba_settings[' . $args['id'] . ']"/>';
+		$html = '<select id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']"/>';
 
 		foreach ( $args['options'] as $option => $name ) :
 			$selected = selected( $option, $value, false );
@@ -646,7 +646,7 @@ class TZBA_Settings {
 	 * Renders rich editor fields.
 	 *
 	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Boilerplate Addon Options
+	 * @global $this->options Array of all the ThemeZee Related Posts Options
 	 * @global $wp_version WordPress Version
 	 */
 	function rich_editor_callback( $args ) {
@@ -657,10 +657,10 @@ class TZBA_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		ob_start();
-		wp_editor( stripslashes( $value ), 'tzba_settings_' . $args['id'], array( 'textarea_name' => 'tzba_settings[' . $args['id'] . ']' ) );
+		wp_editor( stripslashes( $value ), 'tzrp_settings_' . $args['id'], array( 'textarea_name' => 'tzrp_settings[' . $args['id'] . ']' ) );
 		$html = ob_get_clean();
 
-		$html .= '<br/><label for="tzba_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
+		$html .= '<br/><label for="tzrp_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
 
 		echo $html;
 	}
@@ -679,8 +679,8 @@ class TZBA_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="text" class="' . $size . '-text" id="tzba_settings[' . $args['id'] . ']" name="tzba_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-		$html .= '<span>&nbsp;<input type="button" class="tzba_settings_upload_button button-secondary" value="' . __( 'Upload File', 'themezee-boilerplate-addon' ) . '"/></span>';
+		$html = '<input type="text" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+		$html .= '<span>&nbsp;<input type="button" class="tzrp_settings_upload_button button-secondary" value="' . __( 'Upload File', 'themezee-related-posts' ) . '"/></span>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
@@ -693,18 +693,18 @@ class TZBA_Settings {
 	*/
 	public function activate_license() {
 		
-		if( ! isset( $_POST['tzba_settings'] ) )
+		if( ! isset( $_POST['tzrp_settings'] ) )
 			return;
 
-		if( ! isset( $_POST['tzba_activate_license'] ) )
+		if( ! isset( $_POST['tzrp_activate_license'] ) )
 			return;
 
-		if( ! isset( $_POST['tzba_settings']['license_key'] ) )
+		if( ! isset( $_POST['tzrp_settings']['license_key'] ) )
 			return;
 
 		// retrieve the license from the database
 		$status  = $this->get( 'license_status' );
-		$license = trim( $_POST['tzba_settings']['license_key'] );
+		$license = trim( $_POST['tzrp_settings']['license_key'] );
 
 		if( 'valid' == $status )
 			return; // license already activated and valid
@@ -713,13 +713,13 @@ class TZBA_Settings {
 		$api_params = array(
 			'edd_action'=> 'activate_license',
 			'license' 	=> $license,
-			'item_name' => urlencode( TZBA_NAME ),
-			'item_id'   => TZBA_PRODUCT_ID,
+			'item_name' => urlencode( TZRP_NAME ),
+			'item_id'   => TZRP_PRODUCT_ID,
 			'url'       => home_url()
 		);
 		
 		// Call the custom API.
-		$response = wp_remote_post( TZBA_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
+		$response = wp_remote_post( TZRP_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
 
 		// make sure the response came back okay
 		if ( is_wp_error( $response ) )
@@ -732,9 +732,9 @@ class TZBA_Settings {
 
 		$options['license_status'] = $license_data->license;
 
-		update_option( 'tzba_settings', $options );
+		update_option( 'tzrp_settings', $options );
 
-		delete_transient( 'tzba_license_check' );
+		delete_transient( 'tzrp_license_check' );
 
 	}
 	
@@ -745,28 +745,28 @@ class TZBA_Settings {
 	*/
 	public function deactivate_license() {
 
-		if( ! isset( $_POST['tzba_settings'] ) )
+		if( ! isset( $_POST['tzrp_settings'] ) )
 			return;
 
-		if( ! isset( $_POST['tzba_deactivate_license'] ) )
+		if( ! isset( $_POST['tzrp_deactivate_license'] ) )
 			return;
 
-		if( ! isset( $_POST['tzba_settings']['license_key'] ) )
+		if( ! isset( $_POST['tzrp_settings']['license_key'] ) )
 			return;
 
 		// retrieve the license from the database
-		$license = trim( $_POST['tzba_settings']['license_key'] );
+		$license = trim( $_POST['tzrp_settings']['license_key'] );
 
 		// data to send in our API request
 		$api_params = array(
 			'edd_action'=> 'deactivate_license',
 			'license' 	=> $license,
-			'item_name' => urlencode( TZBA_NAME ),
+			'item_name' => urlencode( TZRP_NAME ),
 			'url'       => home_url()
 		);
 		
 		// Call the custom API.
-		$response = wp_remote_post( TZBA_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
+		$response = wp_remote_post( TZRP_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
 
 		// make sure the response came back okay
 		if ( is_wp_error( $response ) )
@@ -776,9 +776,9 @@ class TZBA_Settings {
 
 		$options['license_status'] = 0;
 
-		update_option( 'tzba_settings', $options );
+		update_option( 'tzrp_settings', $options );
 
-		delete_transient( 'tzba_license_check' );
+		delete_transient( 'tzrp_license_check' );
 
 	}
 
@@ -789,11 +789,11 @@ class TZBA_Settings {
 	*/
 	public function check_license() {
 
-		if( ! empty( $_POST['tzba_settings'] ) ) {
+		if( ! empty( $_POST['tzrp_settings'] ) ) {
 			return; // Don't fire when saving settings
 		}
 
-		$status = get_transient( 'tzba_license_check' );
+		$status = get_transient( 'tzrp_license_check' );
 
 		// Run the license check a maximum of once per day
 		if( false === $status ) {
@@ -802,12 +802,12 @@ class TZBA_Settings {
 			$api_params = array(
 				'edd_action'=> 'check_license',
 				'license' 	=> $this->get( 'license_key' ),
-				'item_name' => urlencode( TZBA_NAME ),
+				'item_name' => urlencode( TZRP_NAME ),
 				'url'       => home_url()
 			);
 			
 			// Call the custom API.
-			$response = wp_remote_post( TZBA_STORE_API_URL, array( 'timeout' => 25, 'sslverify' => true, 'body' => $api_params ) );
+			$response = wp_remote_post( TZRP_STORE_API_URL, array( 'timeout' => 25, 'sslverify' => true, 'body' => $api_params ) );
 
 			// make sure the response came back okay
 			if ( is_wp_error( $response ) )
@@ -819,9 +819,9 @@ class TZBA_Settings {
 
 			$options['license_status'] = $license_data->license;
 
-			update_option( 'tzba_settings', $options );
+			update_option( 'tzrp_settings', $options );
 
-			set_transient( 'tzba_license_check', $license_data->license, DAY_IN_SECONDS );
+			set_transient( 'tzrp_license_check', $license_data->license, DAY_IN_SECONDS );
 
 			$status = $license_data->license;
 
@@ -843,6 +843,6 @@ class TZBA_Settings {
 }
 
 // Run Setting Class
-TZBA_Settings::instance();
+TZRP_Settings::instance();
 
 endif;
