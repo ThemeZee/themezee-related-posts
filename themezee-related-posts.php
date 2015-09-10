@@ -153,16 +153,15 @@ class ThemeZee_Related_Posts {
 		
 		?>
 
-		<dl><dt><h4><?php echo esc_html( $plugin_data['Name'] ); ?> <?php echo esc_html( $plugin_data['Version'] ); ?></h4></dt>
+		<dl>
+			<dt>
+				<h4><?php echo esc_html( $plugin_data['Name'] ); ?></h4>
+				<span><?php printf( __( 'Version %s', 'themezee-related-posts'),  esc_html( $plugin_data['Version'] ) ); ?></span>
+			</dt>
 			<dd>
-				<p>
-					<?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/>
-				</p>
-				<p>
-					<a href="<?php echo admin_url( 'admin.php?page=themezee-add-ons&tab=relatedposts' ); ?>" class="button button-primary"><?php _e('Plugin Settings', 'themezee-related-posts'); ?></a> 
-					<a href="<?php echo admin_url( 'plugins.php?s=ThemeZee+Related+Posts' ); ?>" class="button button-secondary"><?php _e('Deactivate', 'themezee-related-posts'); ?></a>
-				</p>
-				
+				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
+				<a href="<?php echo admin_url( 'admin.php?page=themezee-addons&tab=relatedposts' ); ?>" class="button button-primary"><?php _e('Plugin Settings', 'themezee-related-posts'); ?></a> 
+				<a href="<?php echo esc_url( 'http://themezee.com/docs/related-posts/'); ?>" class="button button-secondary" target="_blank"><?php _e('View Documentation', 'themezee-related-posts'); ?></a>
 			</dd>
 		</dl>
 		

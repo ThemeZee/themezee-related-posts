@@ -56,7 +56,7 @@ class TZRP_Settings_Page {
 		
 		<div id="tzrp-settings" class="tzrp-settings-wrap">
 			
-			<h2><?php _e( 'ThemeZee Related Posts', 'themezee-related-posts' ); ?></h2>
+			<h2><?php _e( 'Related Posts', 'themezee-related-posts' ); ?></h2>
 			<?php settings_errors(); ?>
 			
 			<form class="tzrp-settings-form" method="post" action="options.php">
