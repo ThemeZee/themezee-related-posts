@@ -385,7 +385,6 @@ class TZRP_Settings {
 			),
 			'license_key' => array(
 				'name' => __( 'License Key', 'themezee-related-posts' ),
-				'desc' => sprintf( __( 'Please enter your license key. An active license key is needed for automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-related-posts' ), 'http://themezee.com/support/' ),
 				'section' => 'license',
 				'type' => 'license',
 				'default' => ''
@@ -504,17 +503,20 @@ class TZRP_Settings {
 			$value = isset( $args['default'] ) ? $args['default'] : '';
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="text" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+		$html = '<input type="text" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/><br/><br/>';
 		$license_status = $this->get( 'license_status' );
 		$license_key = ! empty( $value ) ? $value : false;
 
 		if( 'valid' === $license_status && ! empty( $license_key ) ) {
 			$html .= '<input type="submit" class="button" name="tzrp_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-related-posts' ) . '"/>';
-			$html .= '<span style="color:green;">&nbsp;' . __( 'Your license is valid!', 'themezee-related-posts' ) . '</span>';
+			$html .= '<span style="display: inline-block; padding: 5px; color: green;">&nbsp;' . __( 'Your license is valid!', 'themezee-related-posts' ) . '</span>';
 		} elseif( 'expired' === $license_status && ! empty( $license_key ) ) {
-			$renewal_url = esc_url( add_query_arg( array( 'edd_license_key' => $license_key, 'download_id' => 17 ), 'https://affiliatewp.com/checkout' ) );
+			$renewal_url = esc_url( add_query_arg( array( 'edd_license_key' => $license_key, 'download_id' => TZRP_PRODUCT_ID ), 'https://themezee.com/checkout' ) );
 			$html .= '<a href="' . esc_url( $renewal_url ) . '" class="button-primary">' . __( 'Renew Your License', 'themezee-related-posts' ) . '</a>';
-			$html .= '<br/><span style="color:red;">&nbsp;' . __( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-related-posts' ) . '</span>';
+			$html .= '<br/><span style="display: inline-block; padding: 5px; color: red;">&nbsp;' . __( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-related-posts' ) . '</span>';
+		} elseif( 'invalid' === $license_status && ! empty( $license_key ) ) {
+			$html .= '<input type="submit" class="button" name="tzrp_activate_license" value="' . esc_attr__( 'Activate License', 'themezee-related-posts' ) . '"/>';
+			$html .= '<span style="display: inline-block; padding: 5px; color: red;">&nbsp;' . __( 'Your license is invalid!', 'themezee-related-posts' ) . '</span>';
 		} else {
 			$html .= '<input type="submit" class="button" name="tzrp_activate_license" value="' . esc_attr__( 'Activate License', 'themezee-related-posts' ) . '"/>';
 		}
