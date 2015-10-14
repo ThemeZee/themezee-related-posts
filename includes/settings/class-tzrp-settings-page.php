@@ -7,6 +7,9 @@
  * @package ThemeZee Related Posts
  */
  
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 
 // Use class to avoid namespace collisions
 if ( ! class_exists('TZRP_Settings_Page') ) :
