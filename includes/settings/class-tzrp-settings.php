@@ -129,8 +129,7 @@ class TZRP_Settings {
 		}
 		
 		// Add Sections
-		add_settings_section( 'tzrp_settings_example_one', __('Example 1', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
-		add_settings_section( 'tzrp_settings_example_two', __('Example 2', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
+		add_settings_section( 'tzrp_settings_general', __('General', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
 		add_settings_section( 'tzrp_settings_license', __('License', 'themezee-related-posts'), '__return_false', 'tzrp_settings' );
 		
 		// Add Settings
@@ -267,124 +266,48 @@ class TZRP_Settings {
 	function get_registered_settings() {
 
 		$settings = array(
-			'textfield' => array(
-				'name' =>  __('Textfield', 'themezee-related-posts'),
-				'desc' => __('Displays a textfield setting. ', 'themezee-related-posts'),
-				'section' => 'example_one',
-				'type' => 'text',
-				'size' => 'regular' // Delete that line for normal text field
-			),
-			'textfield_small' => array(
-				'name' =>  __('Textfield Small', 'themezee-related-posts'),
-				'desc' => __('Displays a small textfield setting. ', 'themezee-related-posts'),
-				'section' => 'example_one',
-				'type' => 'text',
-				'size' => 'small',
-				'default' => ''
-			),
-			'textfield_large' => array(
-				'name' =>  __('Textfield Large', 'themezee-related-posts'),
-				'desc' => __('Displays a large textfield setting. ', 'themezee-related-posts'),
-				'section' => 'example_one',
-				'type' => 'text',
-				'size' => 'large',
-				'default' => ''
-			),
-			'radio_button' => array(
-				'name' =>  __('Radio Buttons', 'themezee-related-posts'),
-				'desc' => __('Shows an example radio button control. ', 'themezee-related-posts'),
-				'section' => 'example_one',
-				'type' => 'radio',
-				'options' => array(	
-					'radio_1' => __('Radio Setting 1', 'themezee-related-posts'),	
-					'radio_2' => __('Radio Setting 2', 'themezee-related-posts'),	
-					'radio_3' => __('Radio Setting 3', 'themezee-related-posts')
-				),
-				'default' => 'radio_2'
-			),
-			'checkbox' => array(
-				'name' =>  __('Checkbox', 'themezee-related-posts'),
-				'desc' => __('Displays an example checkbox (default = true). ', 'themezee-related-posts'),
-				'section' => 'example_one',
+			'fulltext_search' => array(
+				'name' =>  __('Full text search', 'themezee-related-posts'),
+				'desc' => __('Use the complete post content to find related posts. If disabled, only the post title will be used. ', 'themezee-related-posts'),
+				'section' => 'general',
 				'type' => 'checkbox',
 				'default' => true
 			),
-			'checkbox_2' => array(
-				'name' =>  __('Checkbox 2', 'themezee-related-posts'),
-				'desc' => __('Displays a second example checkbox (default = false). ', 'themezee-related-posts'),
-				'section' => 'example_one',
+			'automatic_display' => array(
+				'name' =>  __('Automatic display', 'themezee-related-posts'),
+				'desc' => __('Display related posts automatically below each post (default = false). ', 'themezee-related-posts'),
+				'section' => 'general',
 				'type' => 'checkbox',
 				'default' => false
 			),
-			'textarea' => array(
-				'name' =>  __('Textarea', 'themezee-related-posts'),
-				'desc' => __('Displays a textarea. ', 'themezee-related-posts'),
-				'section' => 'example_one',
-				'type' => 'textarea',
-				'size' => 'large',
-				'default' => __('Default Text', 'themezee-related-posts')	
+			'title' => array(
+				'name' =>  __('Title', 'themezee-related-posts'),
+				'desc' => __('Heading of the related posts list. ', 'themezee-related-posts'),
+				'section' => 'general',
+				'type' => 'text',
+                                'default' => __('Related Posts', 'themezee-related-posts')
 			),
-			'textarea_html' => array(
-				'name' =>  __('Textarea HTML', 'themezee-related-posts'),
-				'desc' => __('Displays a HTML textarea. ', 'themezee-related-posts'),
-				'section' => 'example_one',
-				'type' => 'textarea_html',
-				'size' => 'large',
-				'default' => __('Default HTML', 'themezee-related-posts')	
-			),
-			'select_field' => array(
-				'name' =>  __('Select Field', 'themezee-related-posts'),
-				'desc' => __('Shows an example select field control. ', 'themezee-related-posts'),
-				'section' => 'example_two',
+			'layout' => array(
+				'name' =>  __('Layout', 'themezee-related-posts'),
+				'desc' => __('Select the layout of the related posts list. ', 'themezee-related-posts'),
+				'section' => 'general',
 				'type' => 'select',
 				'options' => array(	
-					'select_1' => __('Select Setting 1', 'themezee-related-posts'),	
-					'select_2' => __('Select Setting 2', 'themezee-related-posts'),	
-					'select_3' => __('Select Setting 3', 'themezee-related-posts')
+					'layout_list'          => __('List', 'themezee-related-posts'),
+					'layout_two_columns'   => __('Two Columns', 'themezee-related-posts'),
+					'layout_three_columns' => __('Three Columns', 'themezee-related-posts')
 				),
-				'default' => 'select_3'
+				'default' => 'layout_list'
 			),
-			'multicheck' => array(
-				'name' => __( 'Multi Checkbox', 'themezee-related-posts' ),
-				'desc' => __( 'Select multiple checkboxes.', 'themezee-related-posts' ),
-				'section' => 'example_two',
-				'type' => 'multicheck',
-				'options' => array(	
-					'check_1' => __('Checkbox Setting 1', 'themezee-related-posts'),	
-					'check_2' => __('Checkbox Setting 2', 'themezee-related-posts'),	
-					'check_3' => __('Checkbox Setting 3', 'themezee-related-posts')
-				),
-				'default' => true
-			),
-			'number' => array(
-				'name' =>  __('Number', 'themezee-related-posts'),
-				'desc' => __('Example number setting', 'themezee-related-posts'),
-				'section' => 'example_two',
+			'post_count' => array(
+				'name' =>  __('Post Count', 'themezee-related-posts'),
+				'desc' => __('Number of related posts to show. ', 'themezee-related-posts'),
+				'section' => 'general',
 				'type' => 'number',
-				'max' => 80,
+				'max' => 10,
 				'min' => 3,
-				'step' => 0.5,
+				'step' => 1,
 				'default' => 4
-			),
-			'upload' => array(
-				'name' =>  __('File Upload', 'themezee-related-posts'),
-				'desc' => __('Example uploader', 'themezee-related-posts'),
-				'section' => 'example_two',
-				'type' => 'upload',
-				'default' => ''
-			),
-			'missing' => array(
-				'name' =>  __('Missing Callback', 'themezee-related-posts'),
-				'desc' => __('No Setting exists for that type', 'themezee-related-posts'),
-				'section' => 'example_two',
-				'type' => 'blablub',
-				'default' => ''
-			),
-			'editor' => array(
-				'name' =>  __('Editor', 'themezee-related-posts'),
-				'section' => 'example_two',
-				'type' => 'rich_editor',
-				'default' => ''
 			),
 			'license_key' => array(
 				'name' => __( 'License Key', 'themezee-related-posts' ),
