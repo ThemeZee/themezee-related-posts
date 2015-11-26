@@ -128,7 +128,10 @@ class ThemeZee_Related_Posts {
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_styles' ) );
 		
 		// Add Related Posts Box to Add-on Overview Page
-		add_action('themezee_addons_overview_page', array( __CLASS__, 'addon_overview_page' ) );
+		add_action( 'themezee_addons_overview_page', array( __CLASS__, 'addon_overview_page' ) );
+		
+		// Add License Key admin notice
+		add_action( 'admin_notices', array( __CLASS__, 'license_key_admin_notice' ) );
 		
 		// Add automatic plugin updater from ThemeZee Store API
 		add_action( 'admin_init', array( __CLASS__, 'plugin_updater' ), 0 );
@@ -206,6 +209,39 @@ class ThemeZee_Related_Posts {
 		</dl>
 		
 		<?php
+	}
+	
+	/**
+	 * Add license key admin notice
+	 *
+	 * @return void
+	 */
+	static function license_key_admin_notice() { 
+	
+		global $pagenow;
+	
+		// Display only on Plugins page
+		if ( 'plugins.php' !== $pagenow  ) {
+			return;
+		}
+		
+		// Get Settings
+		$options = TZRP_Settings::instance();
+		
+		if( '' == $options->get( 'license_key' ) ) : ?>
+			
+			<div class="updated">
+				<p>
+					<?php printf( __( 'Please enter your license key for the %1$s add-on in order to receive updates and support. <a href="%2$s">Enter License Key</a>', 'themezee-related-posts' ),
+						TZRP_NAME,
+						admin_url( 'themes.php?page=themezee-addons&tab=relatedposts' ) ); 
+					?>
+				</p>
+			</div>
+			
+		<?php
+		endif;
+	
 	}
 	
 	/**
