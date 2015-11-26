@@ -1,4 +1,30 @@
 /*
- * Business Content Widgets Stylesheet
+ * ThemeZee Related Posts
+ * http://themezee.com/addons/replated-posts/
  *
+ * Copyright(C) 2015, ThemeZee.com - support@themezee.com
+ * License: GPL v3
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * @package ThemeZee Related Posts
  */
+
+ 
+/*--------------------------------------------------------------
+# General Styles
+---------------------------------------------------------------- */
+
+/* Clearing Floats */
+.tzrp-clearfix:before, 
+.tzrp-clearfix:after {  
+	content: " ";
+	display: table;  
+}  
+
+.tzrp-clearfix:after {  
+	clear: both;
+}  
+
+.tzrp-clearfix {
+    *zoom: 1; /* For IE 6/7 only */  
+}

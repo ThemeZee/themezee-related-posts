@@ -162,17 +162,28 @@ class ThemeZee_Related_Posts {
         }
 
 
-        /******************/
-		
-	/* Enqueue Widget Styles */
+   	/**
+	 * Enqueue Styles
+	 *
+	 * @return void
+	 */
 	static function enqueue_styles() {
 	
-		// Enqueue BCW Plugin Stylesheet
-		wp_enqueue_style('themezee-related-posts', self::get_stylesheet() );
+		// Return early if theme handles styling
+		if ( current_theme_supports( 'themezee-related-posts' ) ) :
+			return;
+		endif;
+		
+		// Enqueue Plugin Stylesheet
+		wp_enqueue_style( 'themezee-related-posts', self::get_stylesheet() );
 		
 	}
 	
-	/* Get Stylesheet URL */
+	/**
+	 * Get Stylesheet URL
+	 *
+	 * @return string Stylesheet URL
+	 */
 	static function get_stylesheet() {
 		
 		if ( file_exists( get_stylesheet_directory() . '/css/themezee-related-posts.css' ) )
