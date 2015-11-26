@@ -127,6 +127,9 @@ class ThemeZee_Related_Posts {
 		// Enqueue Frontend Widget Styles
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_styles' ) );
 		
+		// Add Settings link to Plugin actions
+		add_filter( 'plugin_action_links_' . plugin_basename( TZRP_PLUGIN_FILE ), array( __CLASS__, 'plugin_action_links' ) );
+		
 		// Add Related Posts Box to Add-on Overview Page
 		add_action( 'themezee_addons_overview_page', array( __CLASS__, 'addon_overview_page' ) );
 		
@@ -194,6 +197,18 @@ class ThemeZee_Related_Posts {
 			$stylesheet = TZRP_PLUGIN_URL . '/assets/css/themezee-related-posts.css';
 		
 		return $stylesheet;
+	}
+	
+	/**
+	 * Add Settings link to the plugin actions
+	 *
+	 * @return array $actions Plugin action links
+	 */
+	static function plugin_action_links( $actions ) {
+
+		$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'themes.php?page=themezee-addons&tab=relatedposts' ), __( 'Settings', 'themezee-related-posts' ) ) );
+		
+		return array_merge( $settings_link, $actions );
 	}
 	
 	/**
