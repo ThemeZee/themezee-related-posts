@@ -41,7 +41,7 @@ class TZRP_Settings_Page {
 	static function add_settings_page($tabs) {
 			
 		// Add Related Posts Settings Page to Tabs List
-		$tabs['relatedposts']      = __( 'Related Posts', 'themezee-related-posts' );
+		$tabs['relatedposts']      = esc_html__( 'Related Posts', 'themezee-related-posts' );
 		
 		return $tabs;
 		
@@ -59,7 +59,7 @@ class TZRP_Settings_Page {
 		
 		<div id="tzrp-settings" class="tzrp-settings-wrap">
 			
-			<h2><?php _e( 'Related Posts', 'themezee-related-posts' ); ?></h2>
+			<h1><?php esc_html_e( 'Related Posts', 'themezee-related-posts' ); ?></h1>
 			<?php settings_errors(); ?>
 			
 			<form class="tzrp-settings-form" method="post" action="options.php">

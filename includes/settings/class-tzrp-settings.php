@@ -129,8 +129,8 @@ class TZRP_Settings {
 		}
 		
 		// Add Sections
-		add_settings_section( 'tzrp_settings_general', __('General', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
-		add_settings_section( 'tzrp_settings_license', __('License', 'themezee-related-posts'), '__return_false', 'tzrp_settings' );
+		add_settings_section( 'tzrp_settings_general', esc_html__( 'General', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
+		add_settings_section( 'tzrp_settings_license', esc_html__( 'License', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
 		
 		// Add Settings
 		foreach ( $this->get_registered_settings() as $key => $option ) :
@@ -267,41 +267,41 @@ class TZRP_Settings {
 
 		$settings = array(
 			'fulltext_search' => array(
-				'name' =>  __('Full text search', 'themezee-related-posts'),
-				'desc' => __('Use the complete post content to find related posts. If disabled, only the post title will be used. ', 'themezee-related-posts'),
+				'name' => esc_html__( 'Full text search', 'themezee-related-posts' ),
+				'desc' => esc_html__( 'Use the complete post content to find related posts. If disabled, only the post title will be used.', 'themezee-related-posts' ),
 				'section' => 'general',
 				'type' => 'checkbox',
 				'default' => true
 			),
 			'automatic_display' => array(
-				'name' =>  __('Automatic display', 'themezee-related-posts'),
-				'desc' => __('Display related posts automatically below each post (default = false). ', 'themezee-related-posts'),
+				'name' =>  esc_html__( 'Automatic display', 'themezee-related-posts' ),
+				'desc' => esc_html__( 'Display related posts automatically below each post (default = false). ', 'themezee-related-posts' ),
 				'section' => 'general',
 				'type' => 'checkbox',
 				'default' => false
 			),
 			'title' => array(
-				'name' =>  __('Title', 'themezee-related-posts'),
-				'desc' => __('Heading of the related posts list. ', 'themezee-related-posts'),
+				'name' =>  esc_html__( 'Title', 'themezee-related-posts' ),
+				'desc' => esc_html__( 'Heading of the related posts list. ', 'themezee-related-posts' ),
 				'section' => 'general',
 				'type' => 'text',
-                                'default' => __('Related Posts', 'themezee-related-posts')
+				'default' => esc_html__( 'Related Posts', 'themezee-related-posts' )
 			),
 			'layout' => array(
-				'name' =>  __('Layout', 'themezee-related-posts'),
-				'desc' => __('Select the layout of the related posts list. ', 'themezee-related-posts'),
+				'name' => esc_html__( 'Layout', 'themezee-related-posts' ),
+				'desc' => esc_html__( 'Select the layout of the related posts list. ', 'themezee-related-posts') ,
 				'section' => 'general',
 				'type' => 'select',
 				'options' => array(	
-					'layout_list'          => __('List', 'themezee-related-posts'),
-					'layout_two_columns'   => __('Two Columns', 'themezee-related-posts'),
-					'layout_three_columns' => __('Three Columns', 'themezee-related-posts')
+					'layout_list'          => esc_html__( 'List', 'themezee-related-posts' ),
+					'layout_two_columns'   => esc_html__( 'Two Columns', 'themezee-related-posts' ),
+					'layout_three_columns' => esc_html__( 'Three Columns', 'themezee-related-posts' )
 				),
 				'default' => 'layout_list'
 			),
 			'post_count' => array(
-				'name' =>  __('Post Count', 'themezee-related-posts'),
-				'desc' => __('Number of related posts to show. ', 'themezee-related-posts'),
+				'name' => esc_html__( 'Post Count', 'themezee-related-posts' ),
+				'desc' => esc_html__( 'Number of related posts to show. ', 'themezee-related-posts' ),
 				'section' => 'general',
 				'type' => 'number',
 				'max' => 10,
@@ -310,7 +310,7 @@ class TZRP_Settings {
 				'default' => 4
 			),
 			'license_key' => array(
-				'name' => __( 'License Key', 'themezee-related-posts' ),
+				'name' => esc_html__( 'License Key', 'themezee-related-posts' ),
 				'section' => 'license',
 				'type' => 'license',
 				'default' => ''
@@ -359,7 +359,6 @@ class TZRP_Settings {
 		echo '<p class="description">' . $args['desc'] . '</p>';
 	}
 	
-	
 	/**
 	 * Text Callback
 	 *
@@ -382,7 +381,6 @@ class TZRP_Settings {
 
 		echo $html;
 	}
-	
 	
 	/**
 	 * Radio Callback
@@ -410,8 +408,7 @@ class TZRP_Settings {
 		endif;
 		echo '<p class="description">' . $args['desc'] . '</p>';
 	}
-
-
+	
 	/**
 	 * License Callback
 	 *
@@ -435,14 +432,14 @@ class TZRP_Settings {
 
 		if( 'valid' === $license_status && ! empty( $license_key ) ) {
 			$html .= '<input type="submit" class="button" name="tzrp_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-related-posts' ) . '"/>';
-			$html .= '<span style="display: inline-block; padding: 5px; color: green;">&nbsp;' . __( 'Your license is valid!', 'themezee-related-posts' ) . '</span>';
+			$html .= '<span style="display: inline-block; padding: 5px; color: green;">&nbsp;' . esc_html__( 'Your license is valid!', 'themezee-related-posts' ) . '</span>';
 		} elseif( 'expired' === $license_status && ! empty( $license_key ) ) {
 			$renewal_url = esc_url( add_query_arg( array( 'edd_license_key' => $license_key, 'download_id' => TZRP_PRODUCT_ID ), 'https://themezee.com/checkout' ) );
-			$html .= '<a href="' . esc_url( $renewal_url ) . '" class="button-primary">' . __( 'Renew Your License', 'themezee-related-posts' ) . '</a>';
-			$html .= '<br/><span style="display: inline-block; padding: 5px; color: red;">&nbsp;' . __( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-related-posts' ) . '</span>';
+			$html .= '<a href="' . esc_url( $renewal_url ) . '" class="button-primary">' . esc_html__( 'Renew Your License', 'themezee-related-posts' ) . '</a>';
+			$html .= '<br/><span style="display: inline-block; padding: 5px; color: red;">&nbsp;' . esc_html__( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-related-posts' ) . '</span>';
 		} elseif( 'invalid' === $license_status && ! empty( $license_key ) ) {
 			$html .= '<input type="submit" class="button" name="tzrp_activate_license" value="' . esc_attr__( 'Activate License', 'themezee-related-posts' ) . '"/>';
-			$html .= '<span style="display: inline-block; padding: 5px; color: red;">&nbsp;' . __( 'Your license is invalid!', 'themezee-related-posts' ) . '</span>';
+			$html .= '<span style="display: inline-block; padding: 5px; color: red;">&nbsp;' . esc_html__( 'Your license is invalid!', 'themezee-related-posts' ) . '</span>';
 		} else {
 			$html .= '<input type="submit" class="button" name="tzrp_activate_license" value="' . esc_attr__( 'Activate License', 'themezee-related-posts' ) . '"/>';
 		}
@@ -525,13 +522,11 @@ class TZRP_Settings {
 		echo $html;
 	}
 
-
 	/**
 	 * Missing Callback
 	 *
 	 * If a function is missing for settings callbacks alert the user.
 	 *
-	 * @since 1.3.1
 	 * @param array $args Arguments passed by the setting
 	 * @return void
 	 */
@@ -567,7 +562,7 @@ class TZRP_Settings {
 
 		echo $html;
 	}
-
+	
 	/**
 	 * Rich Editor Callback
 	 *
@@ -613,7 +608,7 @@ class TZRP_Settings {
 
 		echo $html;
 	}
-
+	
 	/**
 	 * Activate license key
 	 *

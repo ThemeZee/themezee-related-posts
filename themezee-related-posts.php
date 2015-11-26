@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: ThemeZee Related Posts
-Plugin URI: http://themezee.com/add-ons/related-posts/
+Plugin URI: http://themezee.com/addons/replated-posts/
 Description: Quickly increase your readers' engagement with your posts by adding Related Posts in the footer of your content. Automatically added Related Posts can increase your internal traffic up to 10%. Just install and activate. 
 Author: ThemeZee
 Author URI: http://themezee.com/
@@ -11,7 +11,8 @@ Domain Path: /languages/
 License: GPL v3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Copyright(C) 2015, ThemeZee.com - contact@themezee.com
+ThemeZee Related Posts
+Copyright(C) 2015, ThemeZee.com - support@themezee.com
 
 */
 
@@ -19,40 +20,37 @@ Copyright(C) 2015, ThemeZee.com - contact@themezee.com
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Use class to avoid namespace collisions
-if ( ! class_exists('ThemeZee_Related_Posts') ) :
+if ( ! class_exists( 'ThemeZee_Related_Posts' ) ) :
+
 
 /**
  * Main ThemeZee_Related_Posts Class
  *
- * @since 1.0
+ * @package ThemeZee Related Posts
  */
 class ThemeZee_Related_Posts {
 
 	/**
-	 * ThemeZee Related Posts Setup
+	 * Call all Functions to setup the Plugin
 	 *
-	 * Calls all Functions to setup the Plugin
-	 *
-	 * @since 1.0
-	 * @static
 	 * @uses ThemeZee_Related_Posts::constants() Setup the constants needed
 	 * @uses ThemeZee_Related_Posts::includes() Include the required files
 	 * @uses ThemeZee_Related_Posts::setup_actions() Setup the hooks and actions
-	 * @uses ThemeZee_Related_Posts::updater() Setup the plugin updater
+	 * @return void
 	 */
 	static function setup() {
 	
 		// Setup Constants
 		self::constants();
 		
+		// Setup Translation
+		add_action( 'plugins_loaded', array( __CLASS__, 'translation' ) );
+	
 		// Include Files
 		self::includes();
 		
 		// Setup Action Hooks
 		self::setup_actions();
-		
-		// Load Translation File
-		load_plugin_textdomain( 'themezee-related-posts', false, dirname(plugin_basename(__FILE__)) );
 		
 	}
 	
@@ -60,19 +58,18 @@ class ThemeZee_Related_Posts {
 	/**
 	 * Setup plugin constants
 	 *
-	 * @since 1.0
 	 * @return void
 	 */
 	static function constants() {
 		
 		// Define Plugin Name
-		define( 'TZRP_NAME', 'ThemeZee Related Posts');
+		define( 'TZRP_NAME', 'ThemeZee Related Posts' );
 
 		// Define Version Number
 		define( 'TZRP_VERSION', '1.0' );
 		
 		// Define Plugin Name
-		define( 'TZRP_PRODUCT_ID', 0);
+		define( 'TZRP_PRODUCT_ID', 0 );
 
 		// Define Update API URL
 		define( 'TZRP_STORE_API_URL', 'https://themezee.com' ); 
@@ -88,10 +85,22 @@ class ThemeZee_Related_Posts {
 		
 	}
 	
+	
+	/**
+	 * Load Translation File
+	 *
+	 * @return void
+	 */
+	static function translation() {
+
+		load_plugin_textdomain( 'themezee-related-posts', false, dirname( plugin_basename( TZRP_PLUGIN_FILE ) ) . '/languages/' );
+		
+	}
+	
+	
 	/**
 	 * Include required files
 	 *
-	 * @since 1.0
 	 * @return void
 	 */
 	static function includes() {
@@ -110,7 +119,7 @@ class ThemeZee_Related_Posts {
 	/**
 	 * Setup Action Hooks
 	 *
-	 * @since 1.0
+	 * @see https://codex.wordpress.org/Function_Reference/add_action WordPress Codex
 	 * @return void
 	 */
 	static function setup_actions() {
@@ -118,7 +127,7 @@ class ThemeZee_Related_Posts {
 		// Enqueue Frontend Widget Styles
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_styles' ) );
 		
-		// Add Widget Bundle Box to Add-on Overview Page
+		// Add Related Posts Box to Add-on Overview Page
 		add_action('themezee_addons_overview_page', array( __CLASS__, 'addon_overview_page' ) );
 		
 		// Add automatic plugin updater from ThemeZee Store API
@@ -151,7 +160,7 @@ class ThemeZee_Related_Posts {
 
 
         /******************/
-	
+		
 	/* Enqueue Widget Styles */
 	static function enqueue_styles() {
 	
@@ -173,6 +182,11 @@ class ThemeZee_Related_Posts {
 		return $stylesheet;
 	}
 	
+	/**
+	 * Add widget bundle box to addon overview admin page
+	 *
+	 * @return void
+	 */
 	static function addon_overview_page() { 
 	
 		$plugin_data = get_plugin_data( __FILE__ );
@@ -182,18 +196,17 @@ class ThemeZee_Related_Posts {
 		<dl>
 			<dt>
 				<h4><?php echo esc_html( $plugin_data['Name'] ); ?></h4>
-				<span><?php printf( __( 'Version %s', 'themezee-related-posts'),  esc_html( $plugin_data['Version'] ) ); ?></span>
+				<span><?php printf( esc_html__( 'Version %s', 'themezee-related-posts' ),  esc_html( $plugin_data['Version'] ) ); ?></span>
 			</dt>
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
-				<a href="<?php echo admin_url( 'admin.php?page=themezee-addons&tab=relatedposts' ); ?>" class="button button-primary"><?php _e('Plugin Settings', 'themezee-related-posts'); ?></a> 
-				<a href="<?php echo esc_url( 'http://themezee.com/docs/related-posts/'); ?>" class="button button-secondary" target="_blank"><?php _e('View Documentation', 'themezee-related-posts'); ?></a>
+				<a href="<?php echo admin_url( 'admin.php?page=themezee-addons&tab=relatedposts' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-related-posts' ); ?></a>&nbsp;
+				<a href="<?php echo esc_url( 'http://themezee.com/docs/replated-posts/' ); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-related-posts' ); ?></a>
 			</dd>
 		</dl>
 		
 		<?php
 	}
-	
 	
 	/**
 	 * Plugin Updater
@@ -208,9 +221,9 @@ class ThemeZee_Related_Posts {
 		
 		$options = TZRP_Settings::instance();
 
-		if( $options->get('license_key') <> '') :
+		if( $options->get( 'license_key' ) <> '' ) :
 			
-			$license_key = $options->get('license_key');
+			$license_key = $options->get( 'license_key' );
 			
 			// setup the updater
 			$tzrp_updater = new TZRP_Plugin_Updater( TZRP_STORE_API_URL, __FILE__, array(
@@ -228,7 +241,7 @@ class ThemeZee_Related_Posts {
 	
 }
 
-/* Run Plugin */
+// Run Plugin
 ThemeZee_Related_Posts::setup();
 
 endif;
