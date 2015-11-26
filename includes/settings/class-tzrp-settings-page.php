@@ -29,8 +29,6 @@ class TZRP_Settings_Page {
 		// Hook settings page to addon page
 		add_action( 'themezee_addons_page_relatedposts', array( __CLASS__, 'display_settings_page' ) );
 		
-		// Enqueue Admin Page Styles
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_admin_scripts' ) );
 	}
 
 	/**
@@ -73,22 +71,6 @@ class TZRP_Settings_Page {
 		</div>
 <?php
 		echo ob_get_clean();
-	}
-	
-	/**
-	 * Enqueue file upload js on settings page
-	 *
-	 * @return void
-	*/
-	static function enqueue_admin_scripts( $hook ) {
-
-		// Embed stylesheet only on admin settings page
-		if( 'appearance_page_themezee-add-ons' != $hook )
-			return;
-				
-		// Enqueue Admin CSS
-		wp_enqueue_script( 'tzwb-settings-file-upload', TZRP_PLUGIN_URL . '/assets/js/upload-setting.js', array(), TZRP_VERSION );
-		
 	}
 	
 }

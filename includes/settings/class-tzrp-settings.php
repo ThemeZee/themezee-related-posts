@@ -214,14 +214,6 @@ class TZRP_Settings {
 					$input[ $key ] = wp_kses_post( $value );
 				endif;
 			
-			elseif ( $type == 'rich_editor' ) :
-				
-				$input[ $key ] = wp_kses_post( $value );
-			
-			elseif ( $type == 'upload' ) :
-				
-				$input[ $key ] = esc_url_raw( $value );
-			
 			elseif ( $type == 'checkbox' or $type == 'multicheck' ) :
 				
 				$input[ $key ] = $value; // Validate Checkboxes later
@@ -558,52 +550,6 @@ class TZRP_Settings {
 		endforeach;
 
 		$html .= '</select>';
-		$html .= '<p class="description">'  . $args['desc'] . '</p>';
-
-		echo $html;
-	}
-	
-	/**
-	 * Rich Editor Callback
-	 *
-	 * Renders rich editor fields.
-	 *
-	 * @param array $args Arguments passed by the setting
-	 * @global $this->options Array of all the ThemeZee Related Posts Options
-	 * @global $wp_version WordPress Version
-	 */
-	function rich_editor_callback( $args ) {
-
-		if ( isset( $this->options[ $args['id'] ] ) )
-			$value = $this->options[ $args['id'] ];
-		else
-			$value = isset( $args['default'] ) ? $args['default'] : '';
-
-		ob_start();
-		wp_editor( stripslashes( $value ), 'tzrp_settings_' . $args['id'], array( 'textarea_name' => 'tzrp_settings[' . $args['id'] . ']' ) );
-		$html = ob_get_clean();
-
-		$html .= '<br/><label for="tzrp_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
-
-		echo $html;
-	}
-
-	/**
-	 * Upload Callback
-	 *
-	 * Renders file upload fields.
-	 *
-	 * @param array $args Arguements passed by the setting
-	 */
-	function upload_callback( $args ) {
-		if( isset( $this->options[ $args['id'] ] ) )
-			$value = $this->options[ $args['id'] ];
-		else
-			$value = isset( $args['default'] ) ? $args['default'] : '';
-
-		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="text" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-		$html .= '<span>&nbsp;<input type="button" class="tzrp_settings_upload_button button-secondary" value="' . __( 'Upload File', 'themezee-related-posts' ) . '"/></span>';
 		$html .= '<p class="description">'  . $args['desc'] . '</p>';
 
 		echo $html;
