@@ -130,6 +130,7 @@ class TZRP_Settings {
 		
 		// Add Sections
 		add_settings_section( 'tzrp_settings_general', esc_html__( 'General', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
+		add_settings_section( 'tzrp_settings_layout', esc_html__( 'Layout', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
 		add_settings_section( 'tzrp_settings_license', esc_html__( 'License', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
 		
 		// Add Settings
@@ -258,43 +259,60 @@ class TZRP_Settings {
 	function get_registered_settings() {
 
 		$settings = array(
-			'fulltext_search' => array(
-				'name' => esc_html__( 'Full text search', 'themezee-related-posts' ),
-				'desc' => esc_html__( 'Use the complete post content to find related posts. If disabled, only the post title will be used.', 'themezee-related-posts' ),
+			'post_match' => array(
+				'name' =>  __( 'Post Matching', 'themezee-related-posts'),
+				'desc' => __( 'Select the matching method which is used to find related posts.', 'themezee-related-posts' ),
 				'section' => 'general',
-				'type' => 'checkbox',
-				'default' => true
+				'type' => 'radio',
+				'options' => array(	
+					'categories' => __( 'Find related posts by categories', 'themezee-related-posts' ),	
+					'tags' => __( 'Find related posts by tags', 'themezee-related-posts'),	
+					'titles' => __( 'Find related posts by titles', 'themezee-related-posts')
+				),
+				'default' => 'categories'
+			),
+			'order' => array(
+				'name' =>  __( 'Post Order', 'themezee-related-posts'),
+				'desc' => __( 'Select the order of related posts.', 'themezee-related-posts' ),
+				'section' => 'general',
+				'type' => 'radio',
+				'options' => array(	
+					'date' => __( 'Order posts by date', 'themezee-related-posts' ),	
+					'comment_count' => __( 'Order posts by popularity (comment count)', 'themezee-related-posts'),	
+					'rand' => __( 'Random post order', 'themezee-related-posts')
+				),
+				'default' => 'date'
 			),
 			'automatic_display' => array(
 				'name' =>  esc_html__( 'Automatic display', 'themezee-related-posts' ),
-				'desc' => esc_html__( 'Display related posts automatically below each post (default = false). ', 'themezee-related-posts' ),
-				'section' => 'general',
+				'desc' => esc_html__( 'Display related posts automatically below each post.', 'themezee-related-posts' ),
+				'section' => 'layout',
 				'type' => 'checkbox',
 				'default' => false
 			),
 			'title' => array(
 				'name' =>  esc_html__( 'Title', 'themezee-related-posts' ),
-				'desc' => esc_html__( 'Heading of the related posts list. ', 'themezee-related-posts' ),
-				'section' => 'general',
+				'desc' => esc_html__( 'Heading of the related posts list.', 'themezee-related-posts' ),
+				'section' => 'layout',
 				'type' => 'text',
 				'default' => esc_html__( 'Related Posts', 'themezee-related-posts' )
 			),
-			'layout' => array(
-				'name' => esc_html__( 'Layout', 'themezee-related-posts' ),
-				'desc' => esc_html__( 'Select the layout of the related posts list. ', 'themezee-related-posts') ,
-				'section' => 'general',
+			'style' => array(
+				'name' => esc_html__( 'Layout Style', 'themezee-related-posts' ),
+				'desc' => esc_html__( 'Select the layout style of the related posts list.', 'themezee-related-posts') ,
+				'section' => 'layout',
 				'type' => 'select',
 				'options' => array(	
-					'layout_list'          => esc_html__( 'List', 'themezee-related-posts' ),
-					'layout_two_columns'   => esc_html__( 'Two Columns', 'themezee-related-posts' ),
-					'layout_three_columns' => esc_html__( 'Three Columns', 'themezee-related-posts' )
+					'list' => esc_html__( 'Simple Post List', 'themezee-related-posts' ),
+					'three-columns' => esc_html__( 'Three Column Grid', 'themezee-related-posts' ),
+					'four-columns' => esc_html__( 'Four Column Grid', 'themezee-related-posts' )
 				),
-				'default' => 'layout_list'
+				'default' => 'list'
 			),
 			'post_count' => array(
 				'name' => esc_html__( 'Post Count', 'themezee-related-posts' ),
-				'desc' => esc_html__( 'Number of related posts to show. ', 'themezee-related-posts' ),
-				'section' => 'general',
+				'desc' => esc_html__( 'Maximum number of related posts to show.', 'themezee-related-posts' ),
+				'section' => 'layout',
 				'type' => 'number',
 				'max' => 10,
 				'min' => 3,
