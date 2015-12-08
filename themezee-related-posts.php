@@ -106,12 +106,16 @@ class ThemeZee_Related_Posts {
 	static function includes() {
 
 		// Include Admin Classes
-		require_once TZRP_PLUGIN_DIR . '/includes/class-themezee-addons-page.php';
-		require_once TZRP_PLUGIN_DIR . '/includes/class-tzrp-plugin-updater.php';
+		require_once TZRP_PLUGIN_DIR . '/includes/admin/class-themezee-addons-page.php';
+		require_once TZRP_PLUGIN_DIR . '/includes/admin/class-tzrp-plugin-updater.php';
 		
 		// Include Settings Classes
 		require_once TZRP_PLUGIN_DIR . '/includes/settings/class-tzrp-settings.php';
 		require_once TZRP_PLUGIN_DIR . '/includes/settings/class-tzrp-settings-page.php';
+		
+		// Include Related Posts Files
+		require_once TZRP_PLUGIN_DIR . '/includes/class-tzrp-related-posts.php';
+		require_once TZRP_PLUGIN_DIR . '/includes/related-posts-setup.php';
 		
 	}
 	
