@@ -261,7 +261,7 @@ class TZRP_Settings {
 		$settings = array(
 			'post_match' => array(
 				'name' =>  __( 'Post Matching', 'themezee-related-posts'),
-				'desc' => __( 'Select the matching method which is used to find related posts.', 'themezee-related-posts' ),
+				'desc' => __( 'Select the matching method which is used to find related posts. Every site is different, so test which method works best for you.', 'themezee-related-posts' ),
 				'section' => 'general',
 				'type' => 'radio',
 				'options' => array(	
@@ -283,13 +283,6 @@ class TZRP_Settings {
 				),
 				'default' => 'date'
 			),
-			'automatic_display' => array(
-				'name' =>  esc_html__( 'Automatic display', 'themezee-related-posts' ),
-				'desc' => esc_html__( 'Display related posts automatically below each post.', 'themezee-related-posts' ),
-				'section' => 'layout',
-				'type' => 'checkbox',
-				'default' => false
-			),
 			'title' => array(
 				'name' =>  esc_html__( 'Title', 'themezee-related-posts' ),
 				'desc' => esc_html__( 'Heading of the related posts list.', 'themezee-related-posts' ),
@@ -297,7 +290,7 @@ class TZRP_Settings {
 				'type' => 'text',
 				'default' => esc_html__( 'Related Posts', 'themezee-related-posts' )
 			),
-			'style' => array(
+			'layout' => array(
 				'name' => esc_html__( 'Layout Style', 'themezee-related-posts' ),
 				'desc' => esc_html__( 'Select the layout style of the related posts list.', 'themezee-related-posts') ,
 				'section' => 'layout',
