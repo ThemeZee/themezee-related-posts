@@ -57,9 +57,9 @@ class TZRP_Related_Posts {
 			'class'           => '',
 			'post_match'  	  => $options['post_match'],
 			'order'           => $options['order'],
-			'before_title'    => '<h2 class="entry-title">',
+			'before_title'    => '<h3>',
 			'title'	          => $options['title'],
-			'after_title'     => '</h2>',
+			'after_title'     => '</h3>',
 			'layout'	      => $options['layout'],
 			'post_count'      => $options['post_count'],
 			'echo'            => true
@@ -124,7 +124,27 @@ class TZRP_Related_Posts {
 	private function posts() {
 	
 		// Get Related Posts
-		$related_posts = $this->get_related_posts(); 
+		$related_posts = $this->get_related_posts();
+
+		/***** Alternate Query ( better if we add caching )
+		*	
+		*   // Get Related Post IDs
+		*	$post_ids = $this->get_related_post_ids();
+		*
+		*	// No need to query if there is are no featured posts.
+		*	if ( ! empty( $post_ids ) ) {
+		*
+		*		// Get Related Posts from database
+		*		$related_posts = new WP_Query( array(
+		*			'post__in' => $post_ids,
+		*			'ignore_sticky_posts' => true, 
+		*			'posts_per_page' => -1
+		*			)
+		*		);
+		*		
+		*	}
+		*
+		************************************** */
 
 		// Display Related Posts
 		if( is_object( $related_posts ) and $related_posts->have_posts() ) { 
@@ -167,35 +187,6 @@ class TZRP_Related_Posts {
 		return $post_output;
 	}
 	
-	
-	/**
-	 * Get featured posts
-	 *
-	 * @uses get_related_post_ids()
-	 * @return array
-	 */
-	private function get_related_posts() {
-		
-		// Get Related Post IDs
-		$post_ids = $this->get_related_post_ids();
-
-		// No need to query if there is are no featured posts.
-		if ( empty( $post_ids ) ) {
-			return array();
-		}
-		
-		// Get Related Posts from database
-		$related_posts = new WP_Query( array(
-			'post__in' => $post_ids,
-			'ignore_sticky_posts' => true, 
-			'posts_per_page' => -1
-			)
-		);
-
-		return $related_posts;
-	}
-	
-	
 	/**
 	 * Get related post IDs
 	 *
@@ -205,6 +196,23 @@ class TZRP_Related_Posts {
 	 */
 	private function get_related_post_ids() {
 	
+		// Get Related Posts
+		$related_posts = $this->get_related_posts();
+		
+		// Ensure correct format before return.
+		$related_posts_ids = wp_list_pluck( $related_posts->posts, 'ID' );
+		$related_posts_ids = array_map( 'absint', $related_posts_ids );
+		
+		return $related_posts_ids;
+	}
+	
+	/**
+	 * Get related posts
+	 *
+	 * @return array
+	 */
+	private function get_related_posts() {
+	
 		// Check if single post is viewed
 		if( ! is_singular( 'post' ) ) {
 			return array();
@@ -213,19 +221,33 @@ class TZRP_Related_Posts {
 		// Set Post ID
 		$post_id = get_the_ID();
 		
-		$post_ids = $this->get_related_posts_by_category( $post_id );
+		// Choose Post Matching Method
+		if ( 'tags' == $this->args['post_match'] ) {
+			
+			$related_posts = $this->get_related_posts_by_tags( $post_id );
+			
+		} elseif ( 'categories_tags' == $this->args['post_match'] ) {
+			
+			$related_posts = $this->get_related_posts_by_categories_and_tags( $post_id );
+			
+		} else {
 		
-		return $post_ids;
+			$related_posts = $this->get_related_posts_by_categories( $post_id );
+			
+		}
+		
+		return $related_posts;
+		
 	}
 	
 	/**
-	 * Get related posts by category
+	 * Get related posts by categories
 	 *
-	 * This function will find all related posts by category
+	 * This function will find all posts using the same categories
 	 *
 	 * @return array Array of post IDs.
 	 */
-	private function get_related_posts_by_category( $post_id ) {
+	private function get_related_posts_by_categories( $post_id ) {
 	
 		// Get post categories from single post
 		$categories = get_the_terms( $post_id, 'category' );
@@ -242,12 +264,78 @@ class TZRP_Related_Posts {
 			'orderby' => $this->args['order']
 			)
 		);
-		
-		// Ensure correct format before return.
-		$related_posts_ids = wp_list_pluck( $related_posts->posts, 'ID' );
-		$related_posts_ids = array_map( 'absint', $related_posts_ids );
 
-		return $related_posts_ids;
+		return $related_posts;
+	}
+	
+	/**
+	 * Get related posts by tags
+	 *
+	 * This function will find all posts using the same tags
+	 *
+	 * @return array Array of post IDs.
+	 */
+	private function get_related_posts_by_tags( $post_id ) {
+	
+		// Get post tags from single post
+		$tags = get_the_terms( $post_id, 'post_tag' );
+		
+		// Get Tag IDs
+		$tag_ids = wp_list_pluck( $tags, 'term_id' );
+
+		// Get related posts from database
+		$related_posts = new WP_Query( array(
+			'tag__in' => $tag_ids,
+			'ignore_sticky_posts' => true, 
+			'post__not_in' => array( $post_id ), // Exclude current viewed post
+			'posts_per_page' => (int)$this->args['post_count'],
+			'orderby' => $this->args['order']
+			)
+		);
+
+		return $related_posts;
+	}
+	
+	/**
+	 * Get related posts by categories and tags
+	 *
+	 * This function will find all posts using the same categories and tags
+	 *
+	 * @return array Array of post IDs.
+	 */
+	private function get_related_posts_by_categories_and_tags( $post_id ) {
+	
+		// Get post categories and tags from single post
+		$tags = get_the_terms( $post_id, 'post_tag' );
+		$categories = get_the_terms( $post_id, 'category' );
+		
+		// Get Category and Tag IDs
+		$tag_ids = wp_list_pluck( $tags, 'term_id' );
+		$category_ids = wp_list_pluck( $categories, 'term_id' );
+
+		// Get related posts from database
+		$related_posts = new WP_Query( array(
+			'ignore_sticky_posts' => true, 
+			'post__not_in' => array( $post_id ), // Exclude current viewed post
+			'posts_per_page' => (int)$this->args['post_count'],
+			'orderby' => $this->args['order'],
+			'tax_query' => array(
+				'relation' => 'AND',
+				array(
+					'taxonomy' => 'category',
+					'field'    => 'term_id',
+					'terms'    => $category_ids
+					),
+				array(
+					'taxonomy' => 'post_tag',
+					'field'    => 'term_id',
+					'terms'    => $tag_ids
+					)
+				)
+			)
+		);
+
+		return $related_posts;
 	}
 
 }

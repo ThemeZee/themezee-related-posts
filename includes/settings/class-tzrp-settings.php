@@ -265,9 +265,9 @@ class TZRP_Settings {
 				'section' => 'general',
 				'type' => 'radio',
 				'options' => array(	
-					'categories' => __( 'Find related posts by categories', 'themezee-related-posts' ),	
-					'tags' => __( 'Find related posts by tags', 'themezee-related-posts'),	
-					'titles' => __( 'Find related posts by titles', 'themezee-related-posts')
+					'categories' => __( 'Find related posts by categories', 'themezee-related-posts' ),
+					'tags' => __( 'Find related posts by tags', 'themezee-related-posts'),
+					'categories_tags' => __( 'Find related posts by categories AND tags', 'themezee-related-posts')
 				),
 				'default' => 'categories'
 			),

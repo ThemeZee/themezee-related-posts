@@ -143,31 +143,7 @@ class ThemeZee_Related_Posts {
 		// Add automatic plugin updater from ThemeZee Store API
 		add_action( 'admin_init', array( __CLASS__, 'plugin_updater' ), 0 );
 		
-		$options = TZRP_Settings::instance();
-                if($options->get('automatic_display')) {
-                    add_filter('the_content', array(__CLASS__, 'related_posts_filter'));
-                }
-        }
-
-        /**** RELATED POSTS ALGORITHMS ***/
-        
-        static function related_posts_filter($content) {
-            if (is_single()) {
-                $content .= '<p>New content</p>';
-            }
-            return $content;
-        }
-
-        static function related_posts_query($settings) {
-
-            $match_fields = array('post_title');
-            
-            if (!empty($settings['fulltext_search'])) {
-                $match_fields[] = 'post_content';
-            }
-
-        }
-
+	}
 
    	/**
 	 * Enqueue Styles
@@ -182,25 +158,8 @@ class ThemeZee_Related_Posts {
 		endif;
 		
 		// Enqueue Plugin Stylesheet
-		wp_enqueue_style( 'themezee-related-posts', self::get_stylesheet() );
+		wp_enqueue_style( 'themezee-related-posts', TZRP_PLUGIN_URL . 'assets/css/themezee-related-posts.css', array(), TZRP_VERSION );
 		
-	}
-	
-	/**
-	 * Get Stylesheet URL
-	 *
-	 * @return string Stylesheet URL
-	 */
-	static function get_stylesheet() {
-		
-		if ( file_exists( get_stylesheet_directory() . '/css/themezee-related-posts.css' ) )
-			$stylesheet = get_stylesheet_directory() . '/css/themezee-related-posts.css';
-		elseif ( file_exists( get_template_directory() . '/css/themezee-related-posts.css' ) )
-			$stylesheet = get_template_directory() . '/css/themezee-related-posts.css';
-		else 
-			$stylesheet = TZRP_PLUGIN_URL . '/assets/css/themezee-related-posts.css';
-		
-		return $stylesheet;
 	}
 	
 	/**
