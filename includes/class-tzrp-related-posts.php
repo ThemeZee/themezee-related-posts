@@ -143,29 +143,8 @@ class TZRP_Related_Posts {
 	public function get_related_posts() {
 	
 		// Get Related Posts
-		$related_posts = $this->find_related_posts();
+		return $this->find_related_posts();
 		
-		/***** Alternate Query ( better if we add caching )
-		*	
-		*   // Get Related Post IDs
-		*	$post_ids = $this->get_related_post_ids();
-		*
-		*	// No need to query if there is are no featured posts.
-		*	if ( ! empty( $post_ids ) ) {
-		*
-		*		// Get Related Posts from database
-		*		$related_posts = new WP_Query( array(
-		*			'post__in' => $post_ids,
-		*			'ignore_sticky_posts' => true, 
-		*			'posts_per_page' => -1
-		*			)
-		*		);
-		*		
-		*	}
-		*
-		************************************** */
-		
-		return $related_posts;
 	}
 
 	/* ====== Protected Methods ====== */
@@ -201,25 +180,6 @@ class TZRP_Related_Posts {
 		ob_end_clean();
 
 		return $post_output;
-	}
-	
-	/**
-	 * Get related post IDs
-	 *
-	 * This function will return an array containing the post IDs of all related posts.
-	 *
-	 * @return array Array of post IDs.
-	 */
-	private function get_related_post_ids() {
-	
-		// Get Related Posts
-		$related_posts = $this->find_related_posts();
-		
-		// Ensure correct format before return.
-		$related_posts_ids = wp_list_pluck( $related_posts->posts, 'ID' );
-		$related_posts_ids = array_map( 'absint', $related_posts_ids );
-		
-		return $related_posts_ids;
 	}
 	
 	/**
