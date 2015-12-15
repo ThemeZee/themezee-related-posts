@@ -17,14 +17,34 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @access public
  */
 class TZRP_Related_Posts {
+	/** Singleton *************************************************************/
 
 	/**
-	 * Arguments to find and display related posts
+	 * @var instance The one true TZRP_Related_Posts instance
+	 */
+	private static $instance;
+	
+	/**
+	 * Arguments for related posts
 	 *
 	 * @access public
 	 * @var    array
 	 */
 	public $args = array();
+	
+	/**
+     * Creates or returns an instance of this class.
+     *
+     * @return TZRP_Related_Posts A single instance of this class.
+     */
+	public static function instance( $args = array() ) {
+ 
+        if ( null == self::$instance ) {
+            self::$instance = new self( $args );
+        }
+ 
+        return self::$instance;
+    }
 
 	/**
 	 * Sets up the related posts properties based on function parameters and user options.
@@ -93,7 +113,7 @@ class TZRP_Related_Posts {
 		}
 			
 		// Add related posts list
-		$related_posts .= $this->posts();
+		$related_posts .= $this->related_posts_template();
 		
 		// Wrap the related posts list.
 		$related_posts = sprintf(
@@ -113,19 +133,18 @@ class TZRP_Related_Posts {
 
 		echo $related_posts;
 	}
-
-	/* ====== Protected Methods ====== */
 	
 	/**
-	 * Returns the HTML output of all related posts
+	 * Get related posts
 	 *
-	 * @return string
+	 * @access public
+	 * @return array
 	 */
-	private function posts() {
+	public function get_related_posts() {
 	
 		// Get Related Posts
-		$related_posts = $this->get_related_posts();
-
+		$related_posts = $this->find_related_posts();
+		
 		/***** Alternate Query ( better if we add caching )
 		*	
 		*   // Get Related Post IDs
@@ -145,44 +164,41 @@ class TZRP_Related_Posts {
 		*	}
 		*
 		************************************** */
-
-		// Display Related Posts
-		if( is_object( $related_posts ) and $related_posts->have_posts() ) { 
-			
-			// Start Output Buffering
-			ob_start(); ?>
-			
-			<ul class="related-posts-list">
-			
-			<?php while( $related_posts->have_posts() ) : $related_posts->the_post(); ?>
-			
-				<li id="post-<?php the_ID(); ?>">
-
-					<a href="<?php the_permalink() ?>" rel="bookmark"><?php the_post_thumbnail('category_posts_wide_thumb'); ?></a>
-
-					<?php the_title( sprintf( '<h1 class="entry-title post-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h1>' ); ?>
-
-				</li>
-			
-			<?php endwhile; ?>
-			
-			</ul>
 		
-		<?php
-			// Write Post Output
-			$post_output = ob_get_contents();
+		return $related_posts;
+	}
+
+	/* ====== Protected Methods ====== */
+	
+	/**
+	 * Returns the HTML output of all related posts
+	 *
+	 * @return string
+	 */
+	private function related_posts_template() {
 		
-			// Clean Output Buffer
-			ob_end_clean();
+		// Start Output Buffering
+		ob_start();
+	
+		// Template File
+		$file = 'related-posts-' . esc_attr( $this->args['layout'] ) . '.php';
+		
+		// Check if the theme defines own template files for related posts
+		if ( locate_template( 'template-parts/' . $file ) <> '' ) {
+			
+			locate_template( 'template-parts/' . $file, true, true );
 		
 		} else {
+
+			load_template( TZRP_PLUGIN_DIR . 'includes/templates/' . $file, true );
 		
-			$post_output = __( 'There are no related posts for this article.', 'themezee-related-posts' );
-			
 		}
 		
-		// Reset Postdata
-		wp_reset_postdata();
+		// Write Output Buffer
+		$post_output = ob_get_contents();
+		
+		// Delete Output Buffer
+		ob_end_clean();
 
 		return $post_output;
 	}
@@ -197,7 +213,7 @@ class TZRP_Related_Posts {
 	private function get_related_post_ids() {
 	
 		// Get Related Posts
-		$related_posts = $this->get_related_posts();
+		$related_posts = $this->find_related_posts();
 		
 		// Ensure correct format before return.
 		$related_posts_ids = wp_list_pluck( $related_posts->posts, 'ID' );
@@ -207,11 +223,11 @@ class TZRP_Related_Posts {
 	}
 	
 	/**
-	 * Get related posts
+	 * Find related posts based on matching method
 	 *
 	 * @return array
 	 */
-	private function get_related_posts() {
+	private function find_related_posts() {
 	
 		// Check if single post is viewed
 		if( ! is_singular( 'post' ) ) {
@@ -224,15 +240,15 @@ class TZRP_Related_Posts {
 		// Choose Post Matching Method
 		if ( 'tags' == $this->args['post_match'] ) {
 			
-			$related_posts = $this->get_related_posts_by_tags( $post_id );
+			$related_posts = $this->find_related_posts_by_tags( $post_id );
 			
 		} elseif ( 'categories_tags' == $this->args['post_match'] ) {
 			
-			$related_posts = $this->get_related_posts_by_categories_and_tags( $post_id );
+			$related_posts = $this->find_related_posts_by_categories_and_tags( $post_id );
 			
 		} else {
 		
-			$related_posts = $this->get_related_posts_by_categories( $post_id );
+			$related_posts = $this->find_related_posts_by_categories( $post_id );
 			
 		}
 		
@@ -247,7 +263,7 @@ class TZRP_Related_Posts {
 	 *
 	 * @return array Array of post IDs.
 	 */
-	private function get_related_posts_by_categories( $post_id ) {
+	private function find_related_posts_by_categories( $post_id ) {
 	
 		// Get post categories from single post
 		$categories = get_the_terms( $post_id, 'category' );
@@ -275,7 +291,7 @@ class TZRP_Related_Posts {
 	 *
 	 * @return array Array of post IDs.
 	 */
-	private function get_related_posts_by_tags( $post_id ) {
+	private function find_related_posts_by_tags( $post_id ) {
 	
 		// Get post tags from single post
 		$tags = get_the_terms( $post_id, 'post_tag' );
@@ -303,7 +319,7 @@ class TZRP_Related_Posts {
 	 *
 	 * @return array Array of post IDs.
 	 */
-	private function get_related_posts_by_categories_and_tags( $post_id ) {
+	private function find_related_posts_by_categories_and_tags( $post_id ) {
 	
 		// Get post categories and tags from single post
 		$tags = get_the_terms( $post_id, 'post_tag' );

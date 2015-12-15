@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function themezee_related_posts( $args = array() ) {
 
-	$related_posts = new TZRP_Related_Posts( $args );
+	$related_posts = TZRP_Related_Posts::instance( $args );
 
 	return $related_posts->render();
 }
