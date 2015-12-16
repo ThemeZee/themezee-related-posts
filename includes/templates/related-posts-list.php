@@ -18,9 +18,7 @@ if( is_object( $related_posts ) and $related_posts->have_posts() ) :
 	
 		<li id="post-<?php the_ID(); ?>">
 
-			<a href="<?php the_permalink() ?>" rel="bookmark"><?php the_post_thumbnail('category_posts_wide_thumb'); ?></a>
-
-			<?php the_title( sprintf( '<h1 class="entry-title post-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h1>' ); ?>
+			<?php the_title( sprintf( '<a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a>' ); ?>
 
 		</li>
 	

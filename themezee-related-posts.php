@@ -131,6 +131,12 @@ class ThemeZee_Related_Posts {
 		// Enqueue Frontend Widget Styles
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_styles' ) );
 		
+		// Register Image Sizes
+		add_action( 'init',  array( __CLASS__, 'add_image_size' ) );
+		
+		// Add related posts to content
+		add_filter( 'the_content', array( __CLASS__, 'related_posts_content_filter' ) );
+		
 		// Add Settings link to Plugin actions
 		add_filter( 'plugin_action_links_' . plugin_basename( TZRP_PLUGIN_FILE ), array( __CLASS__, 'plugin_action_links' ) );
 		
@@ -153,12 +159,52 @@ class ThemeZee_Related_Posts {
 	static function enqueue_styles() {
 	
 		// Return early if theme handles styling
+		if ( current_theme_supports( 'themezee-related-posts' ) ) {
+			return;
+		}
+		
+		// Enqueue Plugin Stylesheet
+		wp_enqueue_style( 'themezee-related-posts', TZRP_PLUGIN_URL . 'assets/css/themezee-related-posts.css', array(), TZRP_VERSION );
+		
+	}
+	
+	/**
+	 * Add custom image size for post thumbnails in related posts
+	 *
+	 * @return void
+	 */
+	static function add_image_size() {
+		
+		// Return early if theme handles image sizes
 		if ( current_theme_supports( 'themezee-related-posts' ) ) :
 			return;
 		endif;
 		
-		// Enqueue Plugin Stylesheet
-		wp_enqueue_style( 'themezee-related-posts', TZRP_PLUGIN_URL . 'assets/css/themezee-related-posts.css', array(), TZRP_VERSION );
+		add_image_size( 'themezee-related-posts', 480, 300, true );
+		
+	}
+	
+	/**
+	 * Add related posts to single posts content unless theme handles output
+	 *
+	 * @uses the_content filter hook
+	 * @return void
+	 */
+	static function related_posts_content_filter( $content ) {
+	
+		// Return early if theme handles plugin output
+		if ( current_theme_supports( 'themezee-related-posts' ) ) {
+			return $content;
+		}
+		
+		// Return early if it is not a single post
+		if( ! is_singular( 'post' ) ) {
+			return $content;
+		}
+		
+		$content .= themezee_related_posts( array( 'echo' => false ) );
+		
+		return $content;
 		
 	}
 	

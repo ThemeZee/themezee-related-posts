@@ -297,8 +297,9 @@ class TZRP_Settings {
 				'type' => 'select',
 				'options' => array(	
 					'list' => esc_html__( 'Simple Post List', 'themezee-related-posts' ),
-					'three-columns' => esc_html__( 'Three Column Grid', 'themezee-related-posts' ),
-					'four-columns' => esc_html__( 'Four Column Grid', 'themezee-related-posts' )
+					'grid-2-columns' => esc_html__( 'Two Column Grid', 'themezee-related-posts' ),
+					'grid-3-columns' => esc_html__( 'Three Column Grid', 'themezee-related-posts' ),
+					'grid-4-columns' => esc_html__( 'Four Column Grid', 'themezee-related-posts' )
 				),
 				'default' => 'list'
 			),

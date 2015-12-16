@@ -117,7 +117,7 @@ class TZRP_Related_Posts {
 		
 		// Wrap the related posts list.
 		$related_posts = sprintf(
-			'%1$s<%2$s class="themezee-related-posts related-posts %3$s">%4$s</%2$s>%5$s',
+			'%1$s<%2$s class="themezee-related-posts %3$s">%4$s</%2$s>%5$s',
 			$this->args['before'],
 			tag_escape( $this->args['container'] ),
 			esc_attr( $this->args['class'] ), 
@@ -126,7 +126,7 @@ class TZRP_Related_Posts {
 		);
 
 		// Allow developers to filter the related posts HTML.
-		$related_posts = apply_filters( 'themezee_related_posts', $related_posts, $this->args );
+		$related_posts = apply_filters( 'themezee_related_posts_html', $related_posts, $this->args );
 
 		if ( false === $this->args['echo'] )
 			return $related_posts;
@@ -163,7 +163,7 @@ class TZRP_Related_Posts {
 		$file = 'related-posts-' . esc_attr( $this->args['layout'] ) . '.php';
 		
 		// Check if the theme defines own template files for related posts
-		if ( locate_template( 'template-parts/' . $file ) <> '' ) {
+		if ( current_theme_supports( 'themezee-related-posts' ) and locate_template( 'template-parts/' . $file ) <> '' ) {
 			
 			locate_template( 'template-parts/' . $file, true, true );
 		
