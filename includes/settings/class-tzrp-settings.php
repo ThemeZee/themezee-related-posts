@@ -313,6 +313,18 @@ class TZRP_Settings {
 				'step' => 1,
 				'default' => 4
 			),
+			'post_content' => array(
+				'name' => __( 'Post Content', 'themezee-related-posts' ),
+				'desc' => __( 'Select which post meta details are shown.', 'themezee-related-posts' ),
+				'section' => 'layout',
+				'type' => 'multicheck',
+				'options' => array(	
+					'thumbnails' => __( 'Display post thumbnails', 'themezee-related-posts' ),	
+					'date' => __( 'Display post date', 'themezee-related-posts' ),	
+					'author' => __( 'Display post author', 'themezee-related-posts' )
+				),
+				'default' => true
+			),
 			'license_key' => array(
 				'name' => esc_html__( 'License Key', 'themezee-related-posts' ),
 				'section' => 'license',

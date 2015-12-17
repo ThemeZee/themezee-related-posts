@@ -22,9 +22,11 @@ if( is_object( $related_posts ) and $related_posts->have_posts() ) :
 			
 				<article id="post-<?php the_ID(); ?>">
 
-					<?php the_post_thumbnail( 'themezee-related-posts' ); ?>
+					<?php tzrp_post_thumbnail(); ?>
 					
 					<?php the_title( sprintf( '<h4><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h4>' ); ?>
+					
+					<?php tzrp_entry_meta(); ?>
 
 				</article>
 			
@@ -39,7 +41,7 @@ if( is_object( $related_posts ) and $related_posts->have_posts() ) :
 <?php 
 else : ?>
 
-		<p><?php esc_html_e( 'There are no related posts for this article.', 'themezee-related-posts' ); ?></p>
+		<p><?php esc_html_e( 'No related posts found.', 'themezee-related-posts' ); ?></p>
 			
 <?php 
 endif;

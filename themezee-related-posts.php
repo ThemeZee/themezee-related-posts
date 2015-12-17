@@ -115,7 +115,7 @@ class ThemeZee_Related_Posts {
 		
 		// Include Related Posts Files
 		require_once TZRP_PLUGIN_DIR . '/includes/class-tzrp-related-posts.php';
-		require_once TZRP_PLUGIN_DIR . '/includes/related-posts-setup.php';
+		require_once TZRP_PLUGIN_DIR . '/includes/related-posts-template-functions.php';
 		
 	}
 	

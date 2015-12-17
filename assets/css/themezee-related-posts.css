@@ -30,6 +30,36 @@
 }
 
 /*--------------------------------------------------------------
+# List Layout
+---------------------------------------------------------------- */
+ul.related-posts-list {
+	margin: 1em 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.related-posts-list li {
+	margin: 0 0 1em;
+	padding: 0;
+	list-style: none;
+}
+
+.related-posts-list li h4 {
+	display: inline-block;
+	margin: 0.4em 0;
+	padding: 0;
+}
+
+.related-posts-list li .wp-post-image {
+	float: left;
+	margin: 0 1em 0 0;
+	padding: 0;
+	border: none;
+	max-width: 25%;
+}
+
+
+/*--------------------------------------------------------------
 # Grid Layouts
 ---------------------------------------------------------------- */
 .related-posts-grid {
@@ -65,7 +95,7 @@
 	clear: left;
 }
 
-.related-posts-two-columns .related-post-column:nth-child(2n + 1) {
+.related-posts-three-columns .related-post-column:nth-child(3n + 1) {
 	clear: left;
 }
 
@@ -82,4 +112,16 @@
 .related-posts-columns .related-post-column h4 {
 	margin: 0;
 	padding: 0;
+}
+
+.related-posts-columns .related-post-column .entry-meta {
+	margin: 0;
+	padding: 0;
+	color: #777;
+	font-size: 14px;
+	font-size: 0.875rem;
+}
+
+.related-posts-columns .related-post-column .entry-meta .meta-author {
+	margin-left: 0.5em;
 }

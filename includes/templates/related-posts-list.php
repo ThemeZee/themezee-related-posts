@@ -16,9 +16,13 @@ if( is_object( $related_posts ) and $related_posts->have_posts() ) :
 			
 	<?php while( $related_posts->have_posts() ) : $related_posts->the_post(); ?>
 	
-		<li id="post-<?php the_ID(); ?>">
+		<li id="post-<?php the_ID(); ?>" class="tzrp-clearfix">
 
-			<?php the_title( sprintf( '<a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a>' ); ?>
+			<?php tzrp_post_thumbnail(); ?>
+					
+			<?php the_title( sprintf( '<h4><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h4>' ); ?>
+					
+			<?php tzrp_entry_meta(); ?>
 
 		</li>
 	
@@ -29,7 +33,7 @@ if( is_object( $related_posts ) and $related_posts->have_posts() ) :
 <?php 
 else : ?>
 
-		<p><?php esc_html_e( 'There are no related posts for this article.', 'themezee-related-posts' ); ?></p>
+		<p><?php esc_html_e( 'No related posts found.', 'themezee-related-posts' ); ?></p>
 			
 <?php 
 endif;
