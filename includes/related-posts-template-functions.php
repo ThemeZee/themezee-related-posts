@@ -40,20 +40,11 @@ function tzrp_post_thumbnail() {
 	$options = TZRP_Settings::instance();
 	$post_content = $options->get( 'post_content' ); 
 	
-	// Return early if user has deactivated thumbnails
-	if ( false == $post_content['thumbnails'] ) {
-		return;
-	}
-	
-	if ( has_post_thumbnail() ) {
+	if ( true == $post_content['thumbnails'] && has_post_thumbnail() ) {
 		
 		echo '<a href="' . esc_url( get_the_permalink() ) . '" rel="bookmark">';
 		the_post_thumbnail( 'themezee-related-posts' );
 		echo '</a>';
-		
-	} else {
-	
-		echo '<img src="' . TZRP_PLUGIN_URL . 'assets/images/default-thumbnail.png" class="default-post-image wp-post-image" />';
 		
 	}
 	

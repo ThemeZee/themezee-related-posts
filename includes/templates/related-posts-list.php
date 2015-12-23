@@ -16,11 +16,15 @@ if( is_object( $related_posts ) and $related_posts->have_posts() ) :
 			
 	<?php while( $related_posts->have_posts() ) : $related_posts->the_post(); ?>
 	
-		<li id="post-<?php the_ID(); ?>" class="tzrp-clearfix">
+		<li id="post-<?php the_ID(); ?>" class="clearfix">
 
 			<?php tzrp_post_thumbnail(); ?>
 					
-			<?php the_title( sprintf( '<h4><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h4>' ); ?>
+			<header class="entry-header">
+	
+				<?php the_title( sprintf( '<h4 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h4>' ); ?>
+
+			</header><!-- .entry-header -->
 					
 			<?php tzrp_entry_meta(); ?>
 

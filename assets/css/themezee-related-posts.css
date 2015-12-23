@@ -15,17 +15,17 @@
 ---------------------------------------------------------------- */
 
 /* Clearing Floats */
-.tzrp-clearfix:before, 
-.tzrp-clearfix:after {  
+.clearfix:before, 
+.clearfix:after {  
 	content: " ";
 	display: table;  
 }  
 
-.tzrp-clearfix:after {  
+.clearfix:after {  
 	clear: both;
 }  
 
-.tzrp-clearfix {
+.clearfix {
     *zoom: 1; /* For IE 6/7 only */  
 }
 
@@ -44,7 +44,7 @@ ul.related-posts-list {
 	list-style: none;
 }
 
-.related-posts-list li h4 {
+.related-posts-list li .entry-title {
 	display: inline;
 	margin: 0;
 	padding: 0;
@@ -109,7 +109,7 @@ ul.related-posts-list {
 	border: none;
 }
 
-.related-posts-columns .related-post-column h4 {
+.related-posts-columns .related-post-column .entry-title {
 	margin: 0;
 	padding: 0;
 }
