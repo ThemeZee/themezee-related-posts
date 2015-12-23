@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: ThemeZee Related Posts
-Plugin URI: http://themezee.com/addons/replated-posts/
+Plugin URI: http://themezee.com/plugins/replated-posts/
 Description: Quickly increase your readers' engagement with your posts by adding Related Posts in the footer of your content. Automatically added Related Posts can increase your internal traffic up to 10%. Just install and activate. 
 Author: ThemeZee
 Author URI: http://themezee.com/
@@ -106,7 +106,7 @@ class ThemeZee_Related_Posts {
 	static function includes() {
 
 		// Include Admin Classes
-		require_once TZRP_PLUGIN_DIR . '/includes/admin/class-themezee-addons-page.php';
+		require_once TZRP_PLUGIN_DIR . '/includes/admin/class-themezee-plugins-page.php';
 		require_once TZRP_PLUGIN_DIR . '/includes/admin/class-tzrp-plugin-updater.php';
 		
 		// Include Settings Classes
@@ -140,8 +140,8 @@ class ThemeZee_Related_Posts {
 		// Add Settings link to Plugin actions
 		add_filter( 'plugin_action_links_' . plugin_basename( TZRP_PLUGIN_FILE ), array( __CLASS__, 'plugin_action_links' ) );
 		
-		// Add Related Posts Box to Add-on Overview Page
-		add_action( 'themezee_addons_overview_page', array( __CLASS__, 'addon_overview_page' ) );
+		// Add Related Posts Box to Plugin Overview Page
+		add_action( 'themezee_plugins_overview_page', array( __CLASS__, 'plugin_overview_page' ) );
 		
 		// Add License Key admin notice
 		add_action( 'admin_notices', array( __CLASS__, 'license_key_admin_notice' ) );
@@ -215,17 +215,17 @@ class ThemeZee_Related_Posts {
 	 */
 	static function plugin_action_links( $actions ) {
 
-		$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'themes.php?page=themezee-addons&tab=relatedposts' ), __( 'Settings', 'themezee-related-posts' ) ) );
+		$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=themezee-plugins&tab=relatedposts' ), __( 'Settings', 'themezee-related-posts' ) ) );
 		
 		return array_merge( $settings_link, $actions );
 	}
 	
 	/**
-	 * Add widget bundle box to addon overview admin page
+	 * Add widget bundle box to plugin overview admin page
 	 *
 	 * @return void
 	 */
-	static function addon_overview_page() { 
+	static function plugin_overview_page() { 
 	
 		$plugin_data = get_plugin_data( __FILE__ );
 		
@@ -238,7 +238,7 @@ class ThemeZee_Related_Posts {
 			</dt>
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
-				<a href="<?php echo admin_url( 'admin.php?page=themezee-addons&tab=relatedposts' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-related-posts' ); ?></a>&nbsp;
+				<a href="<?php echo admin_url( 'admin.php?page=themezee-plugins&tab=relatedposts' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-related-posts' ); ?></a>&nbsp;
 				<a href="<?php echo esc_url( 'http://themezee.com/docs/replated-posts/' ); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-related-posts' ); ?></a>
 			</dd>
 		</dl>
@@ -267,9 +267,9 @@ class ThemeZee_Related_Posts {
 			
 			<div class="updated">
 				<p>
-					<?php printf( __( 'Please enter your license key for the %1$s add-on in order to receive updates and support. <a href="%2$s">Enter License Key</a>', 'themezee-related-posts' ),
+					<?php printf( __( 'Please enter your license key for the %1$s plugin in order to receive updates and support. <a href="%2$s">Enter License Key</a>', 'themezee-related-posts' ),
 						TZRP_NAME,
-						admin_url( 'themes.php?page=themezee-addons&tab=relatedposts' ) ); 
+						admin_url( 'options-general.php?page=themezee-plugins&tab=relatedposts' ) ); 
 					?>
 				</p>
 			</div>
