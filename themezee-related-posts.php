@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: ThemeZee Related Posts
-Plugin URI: http://themezee.com/plugins/replated-posts/
+Plugin URI: https://themezee.com/plugins/replated-posts/
 Description: Quickly increase your readers' engagement with your posts by adding Related Posts in the footer of your content. Automatically added Related Posts can increase your internal traffic up to 10%. Just install and activate. 
 Author: ThemeZee
-Author URI: http://themezee.com/
+Author URI: https://themezee.com/
 Version: 1.0
 Text Domain: themezee-related-posts
 Domain Path: /languages/
@@ -238,8 +238,8 @@ class ThemeZee_Related_Posts {
 			</dt>
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
-				<a href="<?php echo admin_url( 'admin.php?page=themezee-plugins&tab=relatedposts' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-related-posts' ); ?></a>&nbsp;
-				<a href="<?php echo esc_url( 'http://themezee.com/docs/replated-posts/' ); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-related-posts' ); ?></a>
+				<a href="<?php echo admin_url( 'options-general.php?page=themezee-plugins&tab=relatedposts' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-related-posts' ); ?></a>&nbsp;
+				<a href="<?php echo esc_url( 'https://themezee.com/docs/replated-posts-documentation/?utm_source=plugin-overview&utm_medium=button&utm_campaign=related-posts&utm_content=documentation' ); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-related-posts' ); ?></a>
 			</dd>
 		</dl>
 		

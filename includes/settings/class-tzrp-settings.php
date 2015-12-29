@@ -131,7 +131,7 @@ class TZRP_Settings {
 		// Add Sections
 		add_settings_section( 'tzrp_settings_general', esc_html__( 'General', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
 		add_settings_section( 'tzrp_settings_layout', esc_html__( 'Layout', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
-		add_settings_section( 'tzrp_settings_license', esc_html__( 'License', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
+		add_settings_section( 'tzrp_settings_license', esc_html__( 'License', 'themezee-related-posts' ), array( $this, 'license_section_intro' ), 'tzrp_settings' );
 		
 		// Add Settings
 		foreach ( $this->get_registered_settings() as $key => $option ) :
@@ -162,6 +162,16 @@ class TZRP_Settings {
 
 		// Creates our settings in the options table
 		register_setting( 'tzrp_settings', 'tzrp_settings', array( $this, 'sanitize_settings' ) );
+	}
+	
+	/**
+	 * License Section Intro
+	 *
+	 * @return void
+	*/
+	function license_section_intro() {
+		printf( __( 'Please enter your license key. An active license key is needed for automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-related-posts' ), 'https://themezee.com/support/?utm_source=plugin-settings&utm_medium=textlink&utm_campaign=related-posts&utm_content=support' );
+
 	}
 
 	/**
