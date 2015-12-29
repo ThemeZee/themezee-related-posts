@@ -256,6 +256,11 @@ class TZRP_Related_Posts {
 		// Get post tags from single post
 		$tags = get_the_terms( $post_id, 'post_tag' );
 		
+		// Return related posts by category if post has no tags
+		if( empty( $tags ) ) {
+			return $this->find_related_posts_by_categories( $post_id );
+		}
+		
 		// Get Tag IDs
 		$tag_ids = wp_list_pluck( $tags, 'term_id' );
 
@@ -284,6 +289,11 @@ class TZRP_Related_Posts {
 		// Get post categories and tags from single post
 		$tags = get_the_terms( $post_id, 'post_tag' );
 		$categories = get_the_terms( $post_id, 'category' );
+		
+		// Return related posts by category if post has no tags
+		if( empty( $tags ) ) {
+			return $this->find_related_posts_by_categories( $post_id );
+		}
 		
 		// Get Category and Tag IDs
 		$tag_ids = wp_list_pluck( $tags, 'term_id' );
