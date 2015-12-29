@@ -1,130 +1,266 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Lean Custom Content Types\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-24 11:12+0100\n"
-"PO-Revision-Date: 2014-08-24 11:12+0100\n"
-"Last-Translator: Ulrich Pogson <grapplerulrich@gmail.com>\n"
-"Language-Team: ThemeZee <contact@themezee.com>\n"
+"Project-Id-Version: ThemeZee Related Posts\n"
+"Report-Msgid-Bugs-To: http://themezee.com/\n"
+"POT-Creation-Date: 2015-12-29 15:15+0100\n"
+"PO-Revision-Date: 2015-12-29 15:15+0100\n"
+"Last-Translator: \n"
+"Language-Team: ThemeZee <support@themezee.com>\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-KeywordsList: __;_e;_x;_ex;_n;esc_attr_e;esc_attr__\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;"
+"_nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;"
+"esc_html_x:1,2c\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: class-jetpack-portfolio.php:105 class-jetpack-portfolio.php:126
-msgid "Your Custom Content Types"
+#: themezee-related-posts.php:218
+msgid "Settings"
 msgstr ""
 
-#: class-jetpack-portfolio.php:112 class-jetpack-portfolio.php:133
-msgid "Portfolio Projects"
-msgstr ""
-
-#: class-jetpack-portfolio.php:167
+#: themezee-related-posts.php:237
 #, php-format
-msgid "Your theme supports <strong>%s</strong>"
+msgid "Version %s"
 msgstr ""
 
-#: class-jetpack-portfolio.php:182
-#, php-format
-msgid "Portfolio pages display at most %1$s projects"
+#: themezee-related-posts.php:241
+msgid "Plugin Settings"
 msgstr ""
 
-#: class-jetpack-portfolio.php:191
-#, php-format
-msgid ""
-"You need to <a href=\"%s\">enable portfolio</a> custom post type before you "
-"can update it's settings."
+#: themezee-related-posts.php:242
+msgid "View Documentation"
 msgstr ""
 
-#: class-jetpack-portfolio.php:273
-msgid "Portfolio Items"
-msgstr ""
-
-#: class-jetpack-portfolio.php:373
-#, php-format
-msgid "Project updated. <a href=\"%s\">View item</a>"
-msgstr ""
-
-#: class-jetpack-portfolio.php:379
-#, php-format
-msgid "Project published. <a href=\"%s\">View project</a>"
-msgstr ""
-
-#: class-jetpack-portfolio.php:381
-#, php-format
-msgid "Project submitted. <a target=\"_blank\" href=\"%s\">Preview project</a>"
-msgstr ""
-
-#: class-jetpack-portfolio.php:382
+#: themezee-related-posts.php:270
 #, php-format
 msgid ""
-"Project scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href="
-"\"%2$s\">Preview project</a>"
+"Please enter your license key for the %1$s plugin in order to receive "
+"updates and support. <a href=\"%2$s\">Enter License Key</a>"
 msgstr ""
 
-#: class-jetpack-portfolio.php:384 class-jetpack-testimonial.php:153
-msgid "M j, Y @ G:i"
+#: includes/related-posts-template-functions.php:119
+#, php-format
+msgid "View all posts by %s"
 msgstr ""
 
-#: class-jetpack-portfolio.php:385
+#: includes/admin/class-themezee-plugins-page.php:43
+#: includes/admin/class-themezee-plugins-page.php:44
+#: includes/admin/class-themezee-plugins-page.php:113
+#: includes/admin/class-themezee-plugins-page.php:118
+msgid "ThemeZee Plugins"
+msgstr ""
+
+#: includes/admin/class-themezee-plugins-page.php:113
+msgid "plugins"
+msgstr ""
+
+#: includes/admin/class-themezee-plugins-page.php:120
 #, php-format
 msgid ""
-"Project item draft updated. <a target=\"_blank\" href=\"%s\">Preview "
-"project</a>"
+"You need more features and functionality? Extend your website with our "
+"customized %s."
 msgstr ""
 
-#: class-jetpack-portfolio.php:397
-msgid "Project"
+#: includes/admin/class-themezee-plugins-page.php:143
+msgid "Overview"
 msgstr ""
 
-#: class-jetpack-portfolio.php:600
-msgid ""
-"Your Portfolio Archive currently has no entries. You can start creating them "
-"on your dashboard."
-msgstr ""
-
-#: class-jetpack-portfolio.php:666
-msgid "Types"
-msgstr ""
-
-#: class-jetpack-portfolio.php:697
-msgid "Tags"
-msgstr ""
-
-#: class-jetpack-testimonial.php:76
-msgid "Customer Testimonials"
-msgstr ""
-
-#: class-jetpack-testimonial.php:142
-#, php-format
-msgid "Testimonial updated. <a href=\"%s\">View testimonial</a>"
-msgstr ""
-
-#: class-jetpack-testimonial.php:148
-#, php-format
-msgid "Testimonial published. <a href=\"%s\">View testimonial</a>"
-msgstr ""
-
-#: class-jetpack-testimonial.php:150
+#: includes/admin/class-tzrp-plugin-updater.php:177
 #, php-format
 msgid ""
-"Testimonial submitted. <a target=\"_blank\" href=\"%s\">Preview testimonial</"
-"a>"
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a>."
 msgstr ""
 
-#: class-jetpack-testimonial.php:151
+#: includes/admin/class-tzrp-plugin-updater.php:184
 #, php-format
 msgid ""
-"Testimonial scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href="
-"\"%2$s\">Preview testimonial</a>"
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a> or <a href=\"%4$s"
+"\">update now</a>."
 msgstr ""
 
-#: class-jetpack-testimonial.php:154
+#: includes/admin/class-tzrp-plugin-updater.php:324
+msgid "You do not have permission to install plugin updates"
+msgstr ""
+
+#: includes/admin/class-tzrp-plugin-updater.php:324
+msgid "Error"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings-page.php:42
+#: includes/settings/class-tzrp-settings-page.php:60
+#: includes/settings/class-tzrp-settings.php:301
+msgid "Related Posts"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:132
+msgid "General"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:133
+msgid "Layout"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:134
+msgid "License"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:173
 #, php-format
 msgid ""
-"Testimonial draft updated. <a target=\"_blank\" href=\"%s\">Preview "
-"testimonial</a>"
+"Please enter your license key. An active license key is needed for automatic "
+"plugin updates and <a href=\"%s\" target=\"_blank\">support</a>."
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:273
+msgid "Post Matching"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:274
+msgid ""
+"Select the matching method which is used to find related posts. Every site "
+"is different, so test which method works best for you."
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:278
+msgid "Find related posts by categories"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:279
+msgid "Find related posts by tags"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:280
+msgid "Find related posts by categories AND tags"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:285
+msgid "Post Order"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:286
+msgid "Select the order of related posts."
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:290
+msgid "Order posts by date"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:291
+msgid "Order posts by popularity (comment count)"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:292
+msgid "Random post order"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:297
+msgid "Title"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:298
+msgid "Heading of the related posts list."
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:304
+msgid "Layout Style"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:305
+msgid "Select the layout style of the related posts list."
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:309
+msgid "Simple Post List"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:310
+msgid "Two Column Grid"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:311
+msgid "Three Column Grid"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:312
+msgid "Four Column Grid"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:317
+msgid "Post Count"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:318
+msgid "Maximum number of related posts to show."
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:327
+msgid "Post Content"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:328
+msgid "Select which post meta details are shown."
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:332
+msgid "Display post thumbnails"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:333
+msgid "Display post date"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:334
+msgid "Display post author"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:339
+msgid "License Key"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:460
+msgid "Deactivate License"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:461
+msgid "Your license is valid!"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:464
+msgid "Renew Your License"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:465
+msgid ""
+"Your license has expired, renew today to continue getting updates and "
+"support!"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:467
+#: includes/settings/class-tzrp-settings.php:470
+msgid "Activate License"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:468
+msgid "Your license is invalid!"
+msgstr ""
+
+#: includes/settings/class-tzrp-settings.php:560
+#, php-format
+msgid ""
+"The callback function used for the <strong>%s</strong> setting is missing."
+msgstr ""
+
+#: includes/templates/related-posts-grid-2-columns.php:48
+#: includes/templates/related-posts-grid-3-columns.php:48
+#: includes/templates/related-posts-grid-4-columns.php:48
+#: includes/templates/related-posts-list.php:40
+msgid "No related posts found."
 msgstr ""

@@ -2,7 +2,7 @@
 /*
 Plugin Name: ThemeZee Related Posts
 Plugin URI: https://themezee.com/plugins/replated-posts/
-Description: Quickly increase your readers' engagement with your posts by adding Related Posts in the footer of your content. Automatically added Related Posts can increase your internal traffic up to 10%. Just install and activate. 
+Description: This plugin is an easy way to display related posts on your website. Your visitors are introduced to other relevant content they might be interested in, which leads to an increase in traffic and reduced bounce rates. 
 Author: ThemeZee
 Author URI: https://themezee.com/
 Version: 1.0
@@ -69,7 +69,7 @@ class ThemeZee_Related_Posts {
 		define( 'TZRP_VERSION', '1.0' );
 		
 		// Define Plugin Name
-		define( 'TZRP_PRODUCT_ID', 0 );
+		define( 'TZRP_PRODUCT_ID', 51298 );
 
 		// Define Update API URL
 		define( 'TZRP_STORE_API_URL', 'https://themezee.com' ); 
