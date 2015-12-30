@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: ThemeZee Related Posts
-Plugin URI: https://themezee.com/plugins/replated-posts/
+Plugin URI: https://themezee.com/plugins/related-posts/
 Description: This plugin is an easy way to display related posts on your website. Your visitors are introduced to other relevant content they might be interested in, which leads to an increase in traffic and reduced bounce rates. 
 Author: ThemeZee
 Author URI: https://themezee.com/
@@ -239,7 +239,7 @@ class ThemeZee_Related_Posts {
 			<dd>
 				<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
 				<a href="<?php echo admin_url( 'options-general.php?page=themezee-plugins&tab=relatedposts' ); ?>" class="button button-primary"><?php esc_html_e( 'Plugin Settings', 'themezee-related-posts' ); ?></a>&nbsp;
-				<a href="<?php echo esc_url( 'https://themezee.com/docs/replated-posts-documentation/?utm_source=plugin-overview&utm_medium=button&utm_campaign=related-posts&utm_content=documentation' ); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-related-posts' ); ?></a>
+				<a href="<?php echo esc_url( 'https://themezee.com/docs/related-posts-documentation/?utm_source=plugin-overview&utm_medium=button&utm_campaign=related-posts&utm_content=documentation' ); ?>" class="button button-secondary" target="_blank"><?php esc_html_e( 'View Documentation', 'themezee-related-posts' ); ?></a>
 			</dd>
 		</dl>
 		
