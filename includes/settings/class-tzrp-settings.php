@@ -170,7 +170,7 @@ class TZRP_Settings {
 	 * @return void
 	*/
 	function license_section_intro() {
-		printf( __( 'Please enter your license key. An active license key is needed for automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-related-posts' ), 'https://themezee.com/support/?utm_source=plugin-settings&utm_medium=textlink&utm_campaign=related-posts&utm_content=support' );
+		printf( __( 'Please activate your license in order to receive automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-related-posts' ), 'https://themezee.com/support/?utm_source=plugin-settings&utm_medium=textlink&utm_campaign=related-posts&utm_content=support' );
 
 	}
 
@@ -335,8 +335,8 @@ class TZRP_Settings {
 				),
 				'default' => true
 			),
-			'license_key' => array(
-				'name' => esc_html__( 'License Key', 'themezee-related-posts' ),
+			'activate_license' => array(
+				'name' => esc_html__( 'Activate License', 'themezee-related-posts' ),
 				'section' => 'license',
 				'type' => 'license',
 				'default' => ''
@@ -445,16 +445,10 @@ class TZRP_Settings {
 	 * @return void
 	 */
 	function license_callback( $args ) {
-
-		if ( isset( $this->options[ $args['id'] ] ) )
-			$value = $this->options[ $args['id'] ];
-		else
-			$value = isset( $args['default'] ) ? $args['default'] : '';
-
-		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="text" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/><br/><br/>';
+	
+		$html = '';
 		$license_status = $this->get( 'license_status' );
-		$license_key = ! empty( $value ) ? $value : false;
+		$license_key = 'a0fc5b07e0dfeebff4a22f3438ff3ea0';
 
 		if( 'valid' === $license_status && ! empty( $license_key ) ) {
 			$html .= '<input type="submit" class="button" name="tzrp_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-related-posts' ) . '"/>';
@@ -602,12 +596,8 @@ class TZRP_Settings {
 		if( ! isset( $_POST['tzrp_activate_license'] ) )
 			return;
 
-		if( ! isset( $_POST['tzrp_settings']['license_key'] ) )
-			return;
-
 		// retrieve the license from the database
 		$status  = $this->get( 'license_status' );
-		$license = trim( $_POST['tzrp_settings']['license_key'] );
 
 		if( 'valid' == $status )
 			return; // license already activated and valid
@@ -615,7 +605,7 @@ class TZRP_Settings {
 		// data to send in our API request
 		$api_params = array(
 			'edd_action'=> 'activate_license',
-			'license' 	=> $license,
+			'license' 	=> 'a0fc5b07e0dfeebff4a22f3438ff3ea0',
 			'item_name' => urlencode( TZRP_NAME ),
 			'item_id'   => TZRP_PRODUCT_ID,
 			'url'       => home_url()
@@ -654,16 +644,10 @@ class TZRP_Settings {
 		if( ! isset( $_POST['tzrp_deactivate_license'] ) )
 			return;
 
-		if( ! isset( $_POST['tzrp_settings']['license_key'] ) )
-			return;
-
-		// retrieve the license from the database
-		$license = trim( $_POST['tzrp_settings']['license_key'] );
-
 		// data to send in our API request
 		$api_params = array(
 			'edd_action'=> 'deactivate_license',
-			'license' 	=> $license,
+			'license' 	=> 'a0fc5b07e0dfeebff4a22f3438ff3ea0',
 			'item_name' => urlencode( TZRP_NAME ),
 			'url'       => home_url()
 		);
@@ -704,7 +688,7 @@ class TZRP_Settings {
 			// data to send in our API request
 			$api_params = array(
 				'edd_action'=> 'check_license',
-				'license' 	=> $this->get( 'license_key' ),
+				'license' 	=> 'a0fc5b07e0dfeebff4a22f3438ff3ea0',
 				'item_name' => urlencode( TZRP_NAME ),
 				'url'       => home_url()
 			);

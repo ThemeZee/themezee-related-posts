@@ -263,11 +263,11 @@ class ThemeZee_Related_Posts {
 		// Get Settings
 		$options = TZRP_Settings::instance();
 		
-		if( '' == $options->get( 'license_key' ) ) : ?>
+		if( 'valid' <> $options->get( 'license_status' ) ) : ?>
 			
 			<div class="updated">
 				<p>
-					<?php printf( __( 'Please enter your license key for the %1$s plugin in order to receive updates and support. <a href="%2$s">Enter License Key</a>', 'themezee-related-posts' ),
+					<?php printf( __( 'Please activate your license for the %1$s plugin in order to receive updates and support. <a href="%2$s">Activate License</a>', 'themezee-related-posts' ),
 						TZRP_NAME,
 						admin_url( 'options-general.php?page=themezee-plugins&tab=relatedposts' ) ); 
 					?>
@@ -292,14 +292,12 @@ class ThemeZee_Related_Posts {
 		
 		$options = TZRP_Settings::instance();
 
-		if( $options->get( 'license_key' ) <> '' ) :
-			
-			$license_key = $options->get( 'license_key' );
+		if( 'valid' == $options->get( 'license_status' ) ) :
 			
 			// setup the updater
 			$tzrp_updater = new TZRP_Plugin_Updater( TZRP_STORE_API_URL, __FILE__, array(
 					'version' 	=> TZRP_VERSION,
-					'license' 	=> $license_key,
+					'license' 	=> 'a0fc5b07e0dfeebff4a22f3438ff3ea0',
 					'item_name' => TZRP_NAME,
 					'item_id'   => TZRP_PRODUCT_ID,
 					'author' 	=> 'ThemeZee'
