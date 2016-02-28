@@ -154,7 +154,7 @@ class ThemeZee_Plugins_Page {
 	static function enqueue_admin_styles( $hook ) {
 
 		// Embed stylesheet only on admin settings page
-		if( 'appearance_page_themezee-plugins' != $hook )
+		if( 'settings_page_themezee-plugins' != $hook )
 			return;
 				
 		// Enqueue Admin CSS
