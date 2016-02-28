@@ -5,7 +5,7 @@ Plugin URI: https://themezee.com/plugins/related-posts/
 Description: This plugin is an easy way to display related posts on your website. Your visitors are introduced to other relevant content they might be interested in, which leads to an increase in traffic and reduced bounce rates. 
 Author: ThemeZee
 Author URI: https://themezee.com/
-Version: 1.0
+Version: 1.0.1
 Text Domain: themezee-related-posts
 Domain Path: /languages/
 License: GPL v3
@@ -66,13 +66,16 @@ class ThemeZee_Related_Posts {
 		define( 'TZRP_NAME', 'ThemeZee Related Posts' );
 
 		// Define Version Number
-		define( 'TZRP_VERSION', '1.0' );
+		define( 'TZRP_VERSION', '1.0.1' );
 		
 		// Define Plugin Name
 		define( 'TZRP_PRODUCT_ID', 51298 );
 
 		// Define Update API URL
-		define( 'TZRP_STORE_API_URL', 'https://themezee.com' ); 
+		define( 'TZRP_STORE_API_URL', 'https://themezee.com' );
+		
+		// Define Plugin Name
+		define( 'TZRP_LICENSE', '6934e03f8d16074ee58fd950088172e3' );
 
 		// Plugin Folder Path
 		define( 'TZRP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -255,8 +258,8 @@ class ThemeZee_Related_Posts {
 	
 		global $pagenow;
 	
-		// Display only on Plugins page
-		if ( 'plugins.php' !== $pagenow  ) {
+		// Display only on Plugins and Updates page
+		if ( ! ( 'plugins.php' == $pagenow or 'update-core.php' == $pagenow ) ) {
 			return;
 		}
 		
@@ -297,7 +300,7 @@ class ThemeZee_Related_Posts {
 			// setup the updater
 			$tzrp_updater = new TZRP_Plugin_Updater( TZRP_STORE_API_URL, __FILE__, array(
 					'version' 	=> TZRP_VERSION,
-					'license' 	=> 'a0fc5b07e0dfeebff4a22f3438ff3ea0',
+					'license' 	=> TZRP_LICENSE,
 					'item_name' => TZRP_NAME,
 					'item_id'   => TZRP_PRODUCT_ID,
 					'author' 	=> 'ThemeZee'

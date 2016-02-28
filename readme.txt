@@ -26,6 +26,11 @@ For detailed setup instructions, visit the official [Documentation](https://them
 
 == Changelog ==
 
+= 1.0.1 =
+
+* fixed missing styling on plugin overview page
+* improved license key setting
+
 = 1.0 =
 
 * Initial Release

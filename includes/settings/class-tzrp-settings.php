@@ -171,7 +171,6 @@ class TZRP_Settings {
 	*/
 	function license_section_intro() {
 		printf( __( 'Please activate your license in order to receive automatic plugin updates and <a href="%s" target="_blank">support</a>.', 'themezee-related-posts' ), 'https://themezee.com/support/?utm_source=plugin-settings&utm_medium=textlink&utm_campaign=related-posts&utm_content=support' );
-
 	}
 
 	/**
@@ -448,7 +447,7 @@ class TZRP_Settings {
 	
 		$html = '';
 		$license_status = $this->get( 'license_status' );
-		$license_key = 'a0fc5b07e0dfeebff4a22f3438ff3ea0';
+		$license_key = TZRP_LICENSE;
 
 		if( 'valid' === $license_status && ! empty( $license_key ) ) {
 			$html .= '<input type="submit" class="button" name="tzrp_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-related-posts' ) . '"/>';
@@ -605,7 +604,7 @@ class TZRP_Settings {
 		// data to send in our API request
 		$api_params = array(
 			'edd_action'=> 'activate_license',
-			'license' 	=> 'a0fc5b07e0dfeebff4a22f3438ff3ea0',
+			'license' 	=> TZRP_LICENSE,
 			'item_name' => urlencode( TZRP_NAME ),
 			'item_id'   => TZRP_PRODUCT_ID,
 			'url'       => home_url()
@@ -626,7 +625,7 @@ class TZRP_Settings {
 		$options['license_status'] = $license_data->license;
 
 		update_option( 'tzrp_settings', $options );
-
+		
 		delete_transient( 'tzrp_license_check' );
 
 	}
@@ -644,31 +643,19 @@ class TZRP_Settings {
 		if( ! isset( $_POST['tzrp_deactivate_license'] ) )
 			return;
 
-		// data to send in our API request
-		$api_params = array(
-			'edd_action'=> 'deactivate_license',
-			'license' 	=> 'a0fc5b07e0dfeebff4a22f3438ff3ea0',
-			'item_name' => urlencode( TZRP_NAME ),
-			'url'       => home_url()
-		);
-		
-		// Call the custom API.
-		$response = wp_remote_post( TZRP_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
-
-		// make sure the response came back okay
-		if ( is_wp_error( $response ) )
-			return false;
-
+		// Get Options
 		$options = $this->get_all();
 
+		// Set License Status to false
 		$options['license_status'] = 0;
 
+		// Update Option
 		update_option( 'tzrp_settings', $options );
-
+		
 		delete_transient( 'tzrp_license_check' );
 
 	}
-
+	
 	/**
 	 * Check license key
 	 *
@@ -688,8 +675,9 @@ class TZRP_Settings {
 			// data to send in our API request
 			$api_params = array(
 				'edd_action'=> 'check_license',
-				'license' 	=> 'a0fc5b07e0dfeebff4a22f3438ff3ea0',
+				'license' 	=> TZRP_LICENSE,
 				'item_name' => urlencode( TZRP_NAME ),
+				'item_id'   => TZRP_PRODUCT_ID,
 				'url'       => home_url()
 			);
 			
@@ -701,14 +689,18 @@ class TZRP_Settings {
 				return false;
 
 			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+			
+			// Update License Status
+			if( $license_data->license <> 'valid' ) {
+				
+				$options = $this->get_all();
 
-			$options = $this->get_all();
+				$options['license_status'] = $license_data->license;
+				update_option( 'tzrp_settings', $options );
 
-			$options['license_status'] = $license_data->license;
-
-			update_option( 'tzrp_settings', $options );
-
-			set_transient( 'tzrp_license_check', $license_data->license, DAY_IN_SECONDS );
+				set_transient( 'tzrp_license_check', $license_data->license, DAY_IN_SECONDS );
+			
+			}
 
 			$status = $license_data->license;
 
@@ -716,15 +708,6 @@ class TZRP_Settings {
 
 		return $status;
 
-	}
-	
-	/**
-	 * Retrieve license status
-	 *
-	 * @return bool
-	*/
-	public function is_license_valid() {
-		return $this->check_license() == 'valid';
 	}
 
 }
