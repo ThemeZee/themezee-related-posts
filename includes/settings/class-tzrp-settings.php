@@ -23,26 +23,26 @@ class TZRP_Settings {
 	 * @var instance The one true TZRP_Settings instance
 	 */
 	private static $instance;
-	
+
 	/**
 	 * @var options Plugin options array
 	 */
 	private $options;
-	
+
 	/**
      * Creates or returns an instance of this class.
      *
      * @return TZRP_Settings A single instance of this class.
      */
 	public static function instance() {
- 
+
         if ( null == self::$instance ) {
             self::$instance = new self;
         }
- 
+
         return self::$instance;
     }
-	
+
 	/**
 	 * Plugin Setup
 	 *
@@ -54,16 +54,16 @@ class TZRP_Settings {
 		add_action( 'admin_init', array( $this, 'activate_license' ) );
 		add_action( 'admin_init', array( $this, 'deactivate_license' ) );
 		add_action( 'admin_init', array( $this, 'check_license' ) );
-		
+
 		// Merge Plugin Options Array from Database with Default Settings Array
-		$this->options = wp_parse_args( 
-			
+		$this->options = wp_parse_args(
+
 			// Get saved theme options from WP database
-			get_option( 'tzrp_settings' , array() ), 
-			
+			get_option( 'tzrp_settings' , array() ),
+
 			// Merge with Default Settings if setting was not saved yet
 			$this->default_settings()
-			
+
 		);
 	}
 
@@ -85,7 +85,7 @@ class TZRP_Settings {
 	public function get_all() {
 		return $this->options;
 	}
-	
+
 	/**
 	 * Retrieve default settings
 	 *
@@ -96,23 +96,23 @@ class TZRP_Settings {
 		$default_settings = array();
 
 		foreach ( $this->get_registered_settings() as $key => $option ) :
-		
+
 			if ( $option[ 'type' ] == 'multicheck' ) :
-			
+
 				foreach ( $option[ 'options' ] as $index => $value ) :
-				
+
 					$default_settings[$key][$index] = isset( $option['default'] ) ? $option['default'] : false;
-				
+
 				endforeach;
-			
+
 			else :
-				
+
 				$default_settings[$key] =  isset( $option['default'] ) ? $option['default'] : false;
-				
+
 			endif;
-		
+
 		endforeach;
-		
+
 		return $default_settings;
 	}
 
@@ -127,18 +127,18 @@ class TZRP_Settings {
 		if ( false == get_option( 'tzrp_settings' ) ) {
 			add_option( 'tzrp_settings' );
 		}
-		
+
 		// Add Sections
 		add_settings_section( 'tzrp_settings_general', esc_html__( 'General', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
 		add_settings_section( 'tzrp_settings_layout', esc_html__( 'Layout', 'themezee-related-posts' ), '__return_false', 'tzrp_settings' );
 		add_settings_section( 'tzrp_settings_license', esc_html__( 'License', 'themezee-related-posts' ), array( $this, 'license_section_intro' ), 'tzrp_settings' );
-		
+
 		// Add Settings
 		foreach ( $this->get_registered_settings() as $key => $option ) :
 
 			$name = isset( $option['name'] ) ? $option['name'] : '';
 			$section = isset( $option['section'] ) ? $option['section'] : 'widgets';
-			
+
 			add_settings_field(
 				'tzrp_settings[' . $key . ']',
 				$name,
@@ -157,13 +157,13 @@ class TZRP_Settings {
 					'default'     => isset( $option['default'] ) ? $option['default'] : ''
 				)
 			);
-			
+
 		endforeach;
 
 		// Creates our settings in the options table
 		register_setting( 'tzrp_settings', 'tzrp_settings', array( $this, 'sanitize_settings' ) );
 	}
-	
+
 	/**
 	 * License Section Intro
 	 *
@@ -188,55 +188,55 @@ class TZRP_Settings {
 		if( ! is_array( $saved ) ) {
 			$saved = array();
 		}
-		
+
 		$settings = $this->get_registered_settings();
 		$input = $input ? $input : array();
-		
+
 		// Loop through each setting being saved and pass it through a sanitization filter
 		foreach ( $input as $key => $value ) :
 
 			// Get the setting type (checkbox, select, etc)
 			$type = isset( $settings[ $key ][ 'type' ] ) ? $settings[ $key ][ 'type' ] : false;
-			
+
 			// Sanitize user input based on setting type
 			if ( $type == 'text' or $type == 'license' ) :
-				
+
 				$input[ $key ] = sanitize_text_field( $value );
-			
+
 			elseif ( $type == 'radio' or $type == 'select' ) :
-				
+
 				$available_options = array_keys( $settings[ $key ][ 'options' ] );
 				$input[ $key ] = in_array( $value, $available_options, true ) ? $value : $settings[ $key ][ 'default' ];
-							
+
 			elseif ( $type == 'number' ) :
-				
+
 				$input[ $key ] = floatval( $value );
-			
+
 			elseif ( $type == 'textarea' ) :
-				
+
 				$input[ $key ] = esc_html( $value );
-			
+
 			elseif ( $type == 'textarea_html' ) :
-				
+
 				if ( current_user_can('unfiltered_html') ) :
 					$input[ $key ] = $value;
 				else :
 					$input[ $key ] = wp_kses_post( $value );
 				endif;
-			
+
 			elseif ( $type == 'checkbox' or $type == 'multicheck' ) :
-				
+
 				$input[ $key ] = $value; // Validate Checkboxes later
-				
+
 			else :
-				
+
 				// Default Sanitization
 				$input[ $key ] = esc_html( $value );
-				
+
 			endif;
 
 		endforeach;
-		
+
 		// Ensure a value is always passed for every checkbox
 		if( ! empty( $settings ) ) :
 			foreach ( $settings as $key => $setting ) :
@@ -252,7 +252,7 @@ class TZRP_Settings {
 						$input[ $key ][ $index ] = ! empty( $input[ $key ][ $index ] );
 					endforeach;
 				endif;
-				
+
 			endforeach;
 		endif;
 
@@ -273,7 +273,7 @@ class TZRP_Settings {
 				'desc' => __( 'Select the matching method which is used to find related posts. Every site is different, so test which method works best for you.', 'themezee-related-posts' ),
 				'section' => 'general',
 				'type' => 'radio',
-				'options' => array(	
+				'options' => array(
 					'categories' => __( 'Find related posts by categories', 'themezee-related-posts' ),
 					'tags' => __( 'Find related posts by tags', 'themezee-related-posts'),
 					'categories_tags' => __( 'Find related posts by categories AND tags', 'themezee-related-posts')
@@ -285,9 +285,9 @@ class TZRP_Settings {
 				'desc' => __( 'Select the order of related posts.', 'themezee-related-posts' ),
 				'section' => 'general',
 				'type' => 'radio',
-				'options' => array(	
-					'date' => __( 'Order posts by date', 'themezee-related-posts' ),	
-					'comment_count' => __( 'Order posts by popularity (comment count)', 'themezee-related-posts'),	
+				'options' => array(
+					'date' => __( 'Order posts by date', 'themezee-related-posts' ),
+					'comment_count' => __( 'Order posts by popularity (comment count)', 'themezee-related-posts'),
 					'rand' => __( 'Random post order', 'themezee-related-posts')
 				),
 				'default' => 'date'
@@ -304,7 +304,7 @@ class TZRP_Settings {
 				'desc' => esc_html__( 'Select the layout style of the related posts list.', 'themezee-related-posts') ,
 				'section' => 'layout',
 				'type' => 'select',
-				'options' => array(	
+				'options' => array(
 					'list' => esc_html__( 'Simple Post List', 'themezee-related-posts' ),
 					'grid-2-columns' => esc_html__( 'Two Column Grid', 'themezee-related-posts' ),
 					'grid-3-columns' => esc_html__( 'Three Column Grid', 'themezee-related-posts' ),
@@ -317,8 +317,8 @@ class TZRP_Settings {
 				'desc' => esc_html__( 'Maximum number of related posts to show.', 'themezee-related-posts' ),
 				'section' => 'layout',
 				'type' => 'number',
-				'max' => 10,
-				'min' => 3,
+				'max' => 24,
+				'min' => 1,
 				'step' => 1,
 				'default' => 4
 			),
@@ -327,9 +327,9 @@ class TZRP_Settings {
 				'desc' => __( 'Select which post meta details are shown.', 'themezee-related-posts' ),
 				'section' => 'layout',
 				'type' => 'multicheck',
-				'options' => array(	
-					'thumbnails' => __( 'Display post thumbnails', 'themezee-related-posts' ),	
-					'date' => __( 'Display post date', 'themezee-related-posts' ),	
+				'options' => array(
+					'thumbnails' => __( 'Display post thumbnails', 'themezee-related-posts' ),
+					'date' => __( 'Display post date', 'themezee-related-posts' ),
 					'author' => __( 'Display post author', 'themezee-related-posts' )
 				),
 				'default' => true
@@ -383,7 +383,7 @@ class TZRP_Settings {
 		endif;
 		echo '<p class="description">' . $args['desc'] . '</p>';
 	}
-	
+
 	/**
 	 * Text Callback
 	 *
@@ -406,7 +406,7 @@ class TZRP_Settings {
 
 		echo $html;
 	}
-	
+
 	/**
 	 * Radio Callback
 	 *
@@ -433,7 +433,7 @@ class TZRP_Settings {
 		endif;
 		echo '<p class="description">' . $args['desc'] . '</p>';
 	}
-	
+
 	/**
 	 * License Callback
 	 *
@@ -444,7 +444,7 @@ class TZRP_Settings {
 	 * @return void
 	 */
 	function license_callback( $args ) {
-	
+
 		$html = '';
 		$license_status = $this->get( 'license_status' );
 		$license_key = TZRP_LICENSE;
@@ -517,7 +517,7 @@ class TZRP_Settings {
 
 		echo $html;
 	}
-	
+
 	/**
 	 * Textarea HTML Callback
 	 *
@@ -581,14 +581,14 @@ class TZRP_Settings {
 
 		echo $html;
 	}
-	
+
 	/**
 	 * Activate license key
 	 *
 	 * @return void
 	*/
 	public function activate_license() {
-		
+
 		if( ! isset( $_POST['tzrp_settings'] ) )
 			return;
 
@@ -609,7 +609,7 @@ class TZRP_Settings {
 			'item_id'   => TZRP_PRODUCT_ID,
 			'url'       => home_url()
 		);
-		
+
 		// Call the custom API.
 		$response = wp_remote_post( TZRP_STORE_API_URL, array( 'timeout' => 35, 'sslverify' => true, 'body' => $api_params ) );
 
@@ -625,11 +625,11 @@ class TZRP_Settings {
 		$options['license_status'] = $license_data->license;
 
 		update_option( 'tzrp_settings', $options );
-		
+
 		delete_transient( 'tzrp_license_check' );
 
 	}
-	
+
 	/**
 	 * Deactivate license key
 	 *
@@ -651,11 +651,11 @@ class TZRP_Settings {
 
 		// Update Option
 		update_option( 'tzrp_settings', $options );
-		
+
 		delete_transient( 'tzrp_license_check' );
 
 	}
-	
+
 	/**
 	 * Check license key
 	 *
@@ -680,7 +680,7 @@ class TZRP_Settings {
 				'item_id'   => TZRP_PRODUCT_ID,
 				'url'       => home_url()
 			);
-			
+
 			// Call the custom API.
 			$response = wp_remote_post( TZRP_STORE_API_URL, array( 'timeout' => 25, 'sslverify' => true, 'body' => $api_params ) );
 
@@ -689,17 +689,17 @@ class TZRP_Settings {
 				return false;
 
 			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-			
+
 			// Update License Status
 			if( $license_data->license <> 'valid' ) {
-				
+
 				$options = $this->get_all();
 
 				$options['license_status'] = $license_data->license;
 				update_option( 'tzrp_settings', $options );
 
 				set_transient( 'tzrp_license_check', $license_data->license, DAY_IN_SECONDS );
-			
+
 			}
 
 			$status = $license_data->license;
