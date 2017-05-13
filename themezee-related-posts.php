@@ -5,7 +5,7 @@ Plugin URI: https://themezee.com/plugins/related-posts/
 Description: This plugin is an easy way to display related posts on your website. Your visitors are introduced to other relevant content they might be interested in, which leads to an increase in traffic and reduced bounce rates.
 Author: ThemeZee
 Author URI: https://themezee.com/
-Version: 1.0.2
+Version: 1.0.3
 Text Domain: themezee-related-posts
 Domain Path: /languages/
 License: GPL v3
@@ -65,7 +65,7 @@ if ( ! class_exists( 'ThemeZee_Related_Posts' ) ) :
 			define( 'TZRP_NAME', 'ThemeZee Related Posts' );
 
 			// Define Version Number.
-			define( 'TZRP_VERSION', '1.0.2' );
+			define( 'TZRP_VERSION', '1.0.3' );
 
 			// Define Plugin Name.
 			define( 'TZRP_PRODUCT_ID', 51298 );
@@ -170,12 +170,26 @@ if ( ! class_exists( 'ThemeZee_Related_Posts' ) ) :
 		 */
 		static function add_image_size() {
 
-			// Return early if theme handles image sizes.
+			// Check if theme defines custom image size.
 			if ( current_theme_supports( 'themezee-related-posts' ) ) :
-				return;
+
+				$theme_support = get_theme_support( 'themezee-related-posts' );
+
+				// Set custom image size.
+				if ( isset( $theme_support[0]['thumbnail_size'] ) && is_array( $theme_support[0]['thumbnail_size'] ) ) :
+
+					$thumbnail_size = $theme_support[0]['thumbnail_size'];
+					add_image_size( 'themezee-related-posts', $thumbnail_size[0], $thumbnail_size[1], true );
+
+				endif;
+
+			else :
+
+				// Set default image size.
+				add_image_size( 'themezee-related-posts', 480, 300, true );
+
 			endif;
 
-			add_image_size( 'themezee-related-posts', 480, 300, true );
 		}
 
 		/**
