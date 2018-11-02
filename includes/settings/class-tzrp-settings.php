@@ -64,7 +64,7 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 			$this->options = wp_parse_args(
 
 				// Get saved theme options from WP database.
-				get_option( 'tzrp_settings' , array() ),
+				get_option( 'tzrp_settings', array() ),
 				// Merge with Default Settings if setting was not saved yet.
 				$this->default_settings()
 			);
@@ -139,7 +139,7 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 			// Add Settings.
 			foreach ( $this->get_registered_settings() as $key => $option ) :
 
-				$name = isset( $option['name'] ) ? $option['name'] : '';
+				$name    = isset( $option['name'] ) ? $option['name'] : '';
 				$section = isset( $option['section'] ) ? $option['section'] : 'widgets';
 
 				add_settings_field(
@@ -149,15 +149,15 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 					'tzrp_settings',
 					'tzrp_settings_' . $section,
 					array(
-					'id'      => $key,
-					'name'    => isset( $option['name'] ) ? $option['name'] : null,
-					'desc'    => ! empty( $option['desc'] ) ? $option['desc'] : '',
-					'size'    => isset( $option['size'] ) ? $option['size'] : null,
-					'max'     => isset( $option['max'] ) ? $option['max'] : null,
-					'min'     => isset( $option['min'] ) ? $option['min'] : null,
-					'step'    => isset( $option['step'] ) ? $option['step'] : null,
-					'options' => isset( $option['options'] ) ? $option['options'] : '',
-					'default'     => isset( $option['default'] ) ? $option['default'] : '',
+						'id'      => $key,
+						'name'    => isset( $option['name'] ) ? $option['name'] : null,
+						'desc'    => ! empty( $option['desc'] ) ? $option['desc'] : '',
+						'size'    => isset( $option['size'] ) ? $option['size'] : null,
+						'max'     => isset( $option['max'] ) ? $option['max'] : null,
+						'min'     => isset( $option['min'] ) ? $option['min'] : null,
+						'step'    => isset( $option['step'] ) ? $option['step'] : null,
+						'options' => isset( $option['options'] ) ? $option['options'] : '',
+						'default' => isset( $option['default'] ) ? $option['default'] : '',
 					)
 				);
 
@@ -193,7 +193,7 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 			}
 
 			$settings = $this->get_registered_settings();
-			$input = $input ? $input : array();
+			$input    = $input ? $input : array();
 
 			// Loop through each setting being saved and pass it through a sanitization filter.
 			foreach ( $input as $key => $value ) :
@@ -209,7 +209,7 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 				elseif ( 'radio' === $type or 'select' === $type ) :
 
 					$available_options = array_keys( $settings[ $key ]['options'] );
-					$input[ $key ] = in_array( $value, $available_options, true ) ? $value : $settings[ $key ]['default'];
+					$input[ $key ]     = in_array( $value, $available_options, true ) ? $value : $settings[ $key ]['default'];
 
 				elseif ( 'number' === $type ) :
 
@@ -270,78 +270,78 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 		function get_registered_settings() {
 
 			$settings = array(
-			'post_match' => array(
-				'name' => __( 'Post Matching', 'themezee-related-posts' ),
-				'desc' => __( 'Select the matching method which is used to find related posts. Every site is different, so test which method works best for you.', 'themezee-related-posts' ),
-				'section' => 'general',
-				'type' => 'radio',
-				'options' => array(
-					'categories' => __( 'Find related posts by categories', 'themezee-related-posts' ),
-					'tags' => __( 'Find related posts by tags', 'themezee-related-posts' ),
-					'categories_tags' => __( 'Find related posts by categories AND tags', 'themezee-related-posts' ),
+				'post_match' => array(
+					'name'    => esc_html__( 'Post Matching', 'themezee-related-posts' ),
+					'desc'    => esc_html__( 'Select the matching method which is used to find related posts. Every site is different, so test which method works best for you.', 'themezee-related-posts' ),
+					'section' => 'general',
+					'type'    => 'radio',
+					'default' => 'categories',
+					'options' => array(
+						'categories'      => esc_html__( 'Find related posts by categories', 'themezee-related-posts' ),
+						'tags'            => esc_html__( 'Find related posts by tags', 'themezee-related-posts' ),
+						'categories_tags' => esc_html__( 'Find related posts by categories AND tags', 'themezee-related-posts' ),
+					),
 				),
-				'default' => 'categories',
-			),
-			'order' => array(
-				'name' => __( 'Post Order', 'themezee-related-posts' ),
-				'desc' => __( 'Select the order of related posts.', 'themezee-related-posts' ),
-				'section' => 'general',
-				'type' => 'radio',
-				'options' => array(
-					'date' => __( 'Order posts by date', 'themezee-related-posts' ),
-					'comment_count' => __( 'Order posts by popularity (comment count)', 'themezee-related-posts' ),
-					'rand' => __( 'Random post order', 'themezee-related-posts' ),
+				'order' => array(
+					'name'    => esc_html__( 'Post Order', 'themezee-related-posts' ),
+					'desc'    => esc_html__( 'Select the order of related posts.', 'themezee-related-posts' ),
+					'section' => 'general',
+					'type'    => 'radio',
+					'default' => 'date',
+					'options' => array(
+						'date'          => esc_html__( 'Order posts by date', 'themezee-related-posts' ),
+						'comment_count' => esc_html__( 'Order posts by popularity (comment count)', 'themezee-related-posts' ),
+						'rand'          => esc_html__( 'Random post order', 'themezee-related-posts' ),
+					),
 				),
-				'default' => 'date',
-			),
-			'title' => array(
-				'name' => esc_html__( 'Title', 'themezee-related-posts' ),
-				'desc' => esc_html__( 'Heading of the related posts list.', 'themezee-related-posts' ),
-				'section' => 'layout',
-				'type' => 'text',
-				'default' => esc_html__( 'Related Posts', 'themezee-related-posts' ),
-			),
-			'layout' => array(
-				'name' => esc_html__( 'Layout Style', 'themezee-related-posts' ),
-				'desc' => esc_html__( 'Select the layout style of the related posts list.', 'themezee-related-posts' ),
-				'section' => 'layout',
-				'type' => 'select',
-				'options' => array(
-					'list' => esc_html__( 'Simple Post List', 'themezee-related-posts' ),
-					'grid-2-columns' => esc_html__( 'Two Column Grid', 'themezee-related-posts' ),
-					'grid-3-columns' => esc_html__( 'Three Column Grid', 'themezee-related-posts' ),
-					'grid-4-columns' => esc_html__( 'Four Column Grid', 'themezee-related-posts' ),
+				'title' => array(
+					'name'    => esc_html__( 'Title', 'themezee-related-posts' ),
+					'desc'    => esc_html__( 'Heading of the related posts list.', 'themezee-related-posts' ),
+					'section' => 'layout',
+					'type'    => 'text',
+					'default' => esc_html__( 'Related Posts', 'themezee-related-posts' ),
 				),
-				'default' => 'list',
-			),
-			'post_count' => array(
-				'name' => esc_html__( 'Post Count', 'themezee-related-posts' ),
-				'desc' => esc_html__( 'Maximum number of related posts to show.', 'themezee-related-posts' ),
-				'section' => 'layout',
-				'type' => 'number',
-				'max' => 24,
-				'min' => 1,
-				'step' => 1,
-				'default' => 4,
-			),
-			'post_content' => array(
-				'name' => __( 'Post Content', 'themezee-related-posts' ),
-				'desc' => __( 'Select which post meta details are shown.', 'themezee-related-posts' ),
-				'section' => 'layout',
-				'type' => 'multicheck',
-				'options' => array(
-					'thumbnails' => __( 'Display post thumbnails', 'themezee-related-posts' ),
-					'date' => __( 'Display post date', 'themezee-related-posts' ),
-					'author' => __( 'Display post author', 'themezee-related-posts' ),
+				'layout' => array(
+					'name'    => esc_html__( 'Layout Style', 'themezee-related-posts' ),
+					'desc'    => esc_html__( 'Select the layout style of the related posts list.', 'themezee-related-posts' ),
+					'section' => 'layout',
+					'type'    => 'select',
+					'default' => 'list',
+					'options' => array(
+						'list'           => esc_html__( 'Simple Post List', 'themezee-related-posts' ),
+						'grid-2-columns' => esc_html__( 'Two Column Grid', 'themezee-related-posts' ),
+						'grid-3-columns' => esc_html__( 'Three Column Grid', 'themezee-related-posts' ),
+						'grid-4-columns' => esc_html__( 'Four Column Grid', 'themezee-related-posts' ),
+					),
 				),
-				'default' => true,
-			),
-			'activate_license' => array(
-				'name' => esc_html__( 'Activate License', 'themezee-related-posts' ),
-				'section' => 'license',
-				'type' => 'license',
-				'default' => '',
-			),
+				'post_count' => array(
+					'name'    => esc_html__( 'Post Count', 'themezee-related-posts' ),
+					'desc'    => esc_html__( 'Maximum number of related posts to show.', 'themezee-related-posts' ),
+					'section' => 'layout',
+					'type'    => 'number',
+					'max'     => 24,
+					'min'     => 1,
+					'step'    => 1,
+					'default' => 4,
+				),
+				'post_content' => array(
+					'name'    => esc_html__( 'Post Content', 'themezee-related-posts' ),
+					'desc'    => esc_html__( 'Select which post meta details are shown.', 'themezee-related-posts' ),
+					'section' => 'layout',
+					'type'    => 'multicheck',
+					'default' => true,
+					'options' => array(
+						'thumbnails' => esc_html__( 'Display post thumbnails', 'themezee-related-posts' ),
+						'date'       => esc_html__( 'Display post date', 'themezee-related-posts' ),
+						'author'     => esc_html__( 'Display post author', 'themezee-related-posts' ),
+					),
+				),
+				'activate_license' => array(
+					'name'    => esc_html__( 'Activate License', 'themezee-related-posts' ),
+					'section' => 'license',
+					'type'    => 'license',
+					'default' => '',
+				),
 			);
 
 			return apply_filters( 'tzrp_settings', $settings );
@@ -359,7 +359,8 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 		function checkbox_callback( $args ) {
 
 			$checked = isset( $this->options[ $args['id'] ] ) ? checked( 1, $this->options[ $args['id'] ], false ) : '';
-			$html = '<input type="checkbox" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="1" ' . $checked . '/>';
+
+			$html  = '<input type="checkbox" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="1" ' . $checked . '/>';
 			$html .= '<label for="tzrp_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
 			echo $html;
@@ -399,11 +400,12 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 
 			if ( isset( $this->options[ $args['id'] ] ) ) {
 				$value = $this->options[ $args['id'] ];
-			} else { 			$value = isset( $args['default'] ) ? $args['default'] : '';
+			} else {
+				$value = isset( $args['default'] ) ? $args['default'] : '';
 			}
 
-			$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-			$html = '<input type="text" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+			$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+			$html  = '<input type="text" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 			$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 			echo $html;
@@ -447,16 +449,22 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 		 * @return void
 		 */
 		function license_callback( $args ) {
-
 			$html = '';
+
 			$license_status = $this->get( 'license_status' );
-			$license_key = TZRP_LICENSE;
+			$license_key    = TZRP_LICENSE;
 
 			if ( 'valid' === $license_status && ! empty( $license_key ) ) {
 				$html .= '<input type="submit" class="button" name="tzrp_deactivate_license" value="' . esc_attr__( 'Deactivate License', 'themezee-related-posts' ) . '"/>';
 				$html .= '<span style="display: inline-block; padding: 5px; color: green;">&nbsp;' . esc_html__( 'Your license is valid!', 'themezee-related-posts' ) . '</span>';
 			} elseif ( 'expired' === $license_status && ! empty( $license_key ) ) {
-				$renewal_url = esc_url( add_query_arg( array( 'edd_license_key' => $license_key, 'download_id' => TZRP_PRODUCT_ID ), 'https://themezee.com/checkout' ) );
+				$renewal_url = esc_url( add_query_arg(
+					array(
+						'edd_license_key' => $license_key,
+						'download_id'     => TZRP_PRODUCT_ID,
+					),
+					'https://themezee.com/checkout'
+				) );
 				$html .= '<a href="' . esc_url( $renewal_url ) . '" class="button-primary">' . esc_html__( 'Renew Your License', 'themezee-related-posts' ) . '</a>';
 				$html .= '<br/><span style="display: inline-block; padding: 5px; color: red;">&nbsp;' . esc_html__( 'Your license has expired, renew today to continue getting updates and support!', 'themezee-related-posts' ) . '</span>';
 			} elseif ( 'invalid' === $license_status && ! empty( $license_key ) ) {
@@ -484,15 +492,16 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 
 			if ( isset( $this->options[ $args['id'] ] ) ) {
 				$value = $this->options[ $args['id'] ];
-			} else { 			$value = isset( $args['default'] ) ? $args['default'] : '';
+			} else {
+				$value = isset( $args['default'] ) ? $args['default'] : '';
 			}
 
 			$max  = isset( $args['max'] ) ? $args['max'] : 999999;
 			$min  = isset( $args['min'] ) ? $args['min'] : 0;
 			$step = isset( $args['step'] ) ? $args['step'] : 1;
 
-			$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-			$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+			$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+			$html  = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
 			$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 			echo $html;
@@ -511,11 +520,12 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 
 			if ( isset( $this->options[ $args['id'] ] ) ) {
 				$value = $this->options[ $args['id'] ];
-			} else { 			$value = isset( $args['default'] ) ? $args['default'] : '';
+			} else {
+				$value = isset( $args['default'] ) ? $args['default'] : '';
 			}
 
-			$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-			$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzrp_settings_' . $args['id'] . '" name="tzrp_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
+			$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+			$html  = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzrp_settings_' . $args['id'] . '" name="tzrp_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
 			$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 			echo $html;
@@ -534,11 +544,12 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 
 			if ( isset( $this->options[ $args['id'] ] ) ) {
 				$value = $this->options[ $args['id'] ];
-			} else { 			$value = isset( $args['default'] ) ? $args['default'] : '';
+			} else {
+				$value = isset( $args['default'] ) ? $args['default'] : '';
 			}
 
-			$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-			$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzrp_settings_' . $args['id'] . '" name="tzrp_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
+			$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+			$html  = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzrp_settings_' . $args['id'] . '" name="tzrp_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
 			$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 			echo $html;
@@ -569,7 +580,8 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 
 			if ( isset( $this->options[ $args['id'] ] ) ) {
 				$value = $this->options[ $args['id'] ];
-			} else { 			$value = isset( $args['default'] ) ? $args['default'] : '';
+			} else {
+				$value = isset( $args['default'] ) ? $args['default'] : '';
 			}
 
 			$html = '<select id="tzrp_settings[' . $args['id'] . ']" name="tzrp_settings[' . $args['id'] . ']"/>';
@@ -601,7 +613,7 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 			}
 
 			// retrieve the license from the database.
-			$status  = $this->get( 'license_status' );
+			$status = $this->get( 'license_status' );
 
 			if ( 'valid' == $status ) {
 				return; // license already activated and valid.
@@ -609,11 +621,11 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 
 			// data to send in our API request.
 			$api_params = array(
-			'edd_action' => 'activate_license',
-			'license' 	=> TZRP_LICENSE,
-			'item_name' => urlencode( TZRP_NAME ),
-			'item_id'   => TZRP_PRODUCT_ID,
-			'url'       => home_url(),
+				'edd_action' => 'activate_license',
+				'license'    => TZRP_LICENSE,
+				'item_name'  => urlencode( TZRP_NAME ),
+				'item_id'    => TZRP_PRODUCT_ID,
+				'url'        => home_url(),
 			);
 
 			// Call the custom API.
@@ -654,8 +666,8 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 			// Get Options.
 			$options = $this->get_all();
 
-			// Set License Status to false.
-			$options['license_status'] = 0;
+			// Set License Status to inactive.
+			$options['license_status'] = 'inactive';
 
 			// Update Option.
 			update_option( 'tzrp_settings', $options );
@@ -679,38 +691,42 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 			// Run the license check a maximum of once per day.
 			if ( false === $status ) {
 
-				// data to send in our API request.
-				$api_params = array(
-				'edd_action' => 'check_license',
-				'license' 	=> TZRP_LICENSE,
-				'item_name' => urlencode( TZRP_NAME ),
-				'item_id'   => TZRP_PRODUCT_ID,
-				'url'       => home_url(),
-				);
+				$options = $this->get_all();
 
-				// Call the custom API.
-				$response = wp_remote_post( TZRP_STORE_API_URL, array( 'timeout' => 25, 'sslverify' => true, 'body' => $api_params ) );
+				if ( 'inactive' !== $options['license_status'] ) {
 
-				// make sure the response came back okay.
-				if ( is_wp_error( $response ) ) {
-					return false;
+					// Data to send in our API request.
+					$api_params = array(
+						'edd_action' => 'check_license',
+						'license'    => TZRP_LICENSE,
+						'item_name'  => urlencode( TZRP_NAME ),
+						'item_id'    => TZRP_PRODUCT_ID,
+						'url'        => home_url(),
+					);
+
+					// Call the custom API.
+					$response = wp_remote_post( TZRP_STORE_API_URL, array( 'timeout' => 25, 'sslverify' => true, 'body' => $api_params ) );
+
+					// Make sure the response came back okay.
+					if ( is_wp_error( $response ) ) {
+						return false;
+					}
+
+					$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+					$status = $license_data->license;
+
+					// Update Options.
+					$options['license_status'] = $status;
+					update_option( 'tzrp_settings', $options );
+
+				} else {
+
+					$status = 'inactive';
+
 				}
 
-				$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-				// Update License Status.
-				if ( 'valid' !== $license_data->license ) {
-
-						$options = $this->get_all();
-
-						$options['license_status'] = $license_data->license;
-						update_option( 'tzrp_settings', $options );
-
-						set_transient( 'tzrp_license_check', $license_data->license, DAY_IN_SECONDS );
-
-				}
-
-				$status = $license_data->license;
+				set_transient( 'tzrp_license_check', $status, DAY_IN_SECONDS );
 			}
 
 			return $status;
