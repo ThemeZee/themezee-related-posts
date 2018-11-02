@@ -3,8 +3,8 @@ Author URI: https://themezee.com
 Plugin URI: https://themezee.com/plugins/related-posts/
 Contributors: themezee
 Requires at least: 4.1
-Tested up to: 4.8
-Stable tag: 1.0.3
+Tested up to: 5.0
+Stable tag: 1.0.4
 License: GPLv2 or later
 
 The *ThemeZee Related Posts* plugin is an easy way to display related posts on your website.
@@ -25,6 +25,10 @@ For detailed setup instructions, visit the official [Documentation](https://them
 3. For detailed setup instructions, visit the official [Documentation](https://themezee.com/docs/related-posts-documentation/) page
 
 == Changelog ==
+
+= 1.0.4 =
+
+* fixed bug in license check function which could lead to performance issues
 
 = 1.0.3 =
 

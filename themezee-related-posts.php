@@ -8,11 +8,11 @@ Author URI: https://themezee.com/
 Version: 1.0.4
 Text Domain: themezee-related-posts
 Domain Path: /languages/
-License: GPL v3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ThemeZee Related Posts
-Copyright(C) 2017, ThemeZee.com - support@themezee.com
+Copyright(C) 2018, ThemeZee.com - support@themezee.com
 
 */
 
