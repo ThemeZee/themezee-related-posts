@@ -615,7 +615,7 @@ if ( ! class_exists( 'TZRP_Settings' ) ) :
 			// retrieve the license from the database.
 			$status = $this->get( 'license_status' );
 
-			if ( 'valid' == $status ) {
+			if ( 'valid' === $status ) {
 				return; // license already activated and valid.
 			}
 

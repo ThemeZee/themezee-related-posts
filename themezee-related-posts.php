@@ -129,7 +129,7 @@ if ( ! class_exists( 'ThemeZee_Related_Posts' ) ) :
 			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_styles' ) );
 
 			// Register Image Sizes.
-			add_action( 'init',  array( __CLASS__, 'add_image_size' ) );
+			add_action( 'init', array( __CLASS__, 'add_image_size' ) );
 
 			// Add related posts to content.
 			add_filter( 'the_content', array( __CLASS__, 'related_posts_content_filter' ) );
@@ -241,7 +241,7 @@ if ( ! class_exists( 'ThemeZee_Related_Posts' ) ) :
 			<dl>
 				<dt>
 					<h4><?php echo esc_html( $plugin_data['Name'] ); ?></h4>
-					<span><?php printf( esc_html__( 'Version %s', 'themezee-related-posts' ),  esc_html( $plugin_data['Version'] ) ); ?></span>
+					<span><?php printf( esc_html__( 'Version %s', 'themezee-related-posts' ), esc_html( $plugin_data['Version'] ) ); ?></span>
 				</dt>
 				<dd>
 					<p><?php echo wp_kses_post( $plugin_data['Description'] ); ?><br/></p>
@@ -270,13 +270,16 @@ if ( ! class_exists( 'ThemeZee_Related_Posts' ) ) :
 			// Get Settings.
 			$options = TZRP_Settings::instance();
 
-			if ( 'valid' <> $options->get( 'license_status' ) ) : ?>
+			if ( 'valid' <> $options->get( 'license_status' ) ) :
+				?>
 
 				<div class="updated">
 					<p>
-						<?php printf( __( 'Please activate your license for the %1$s plugin in order to receive updates and support. <a href="%2$s">Activate License</a>', 'themezee-related-posts' ),
+						<?php
+						printf( __( 'Please activate your license for the %1$s plugin in order to receive updates and support. <a href="%2$s">Activate License</a>', 'themezee-related-posts' ),
 							TZRP_NAME,
-						admin_url( 'options-general.php?page=themezee-plugins&tab=relatedposts' ) );
+							admin_url( 'options-general.php?page=themezee-plugins&tab=relatedposts' )
+						);
 						?>
 					</p>
 				</div>
