@@ -26,6 +26,10 @@ For detailed setup instructions, visit the official [Documentation](https://them
 
 == Changelog ==
 
+= 1.0.5 =
+
+* updated language files
+
 = 1.0.4 =
 
 * fixed bug in license check function which could lead to performance issues
