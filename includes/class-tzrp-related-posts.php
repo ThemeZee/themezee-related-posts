@@ -235,13 +235,13 @@ class TZRP_Related_Posts {
 
 		// Get related posts from database.
 		$related_posts = new WP_Query( array(
-			'category__in' => $category_ids,
+			'post_type'           => 'post',
+			'category__in'        => $category_ids,
 			'ignore_sticky_posts' => true,
-			'post__not_in' => array( $post_id ), // Exclude current viewed post.
-			'posts_per_page' => (int) $this->args['post_count'],
-			'orderby' => $this->args['order'],
-			)
-		);
+			'post__not_in'        => array( $post_id ), // Exclude current viewed post.
+			'posts_per_page'      => (int) $this->args['post_count'],
+			'orderby'             => $this->args['order'],
+		) );
 
 		return $related_posts;
 	}
@@ -268,13 +268,13 @@ class TZRP_Related_Posts {
 
 		// Get related posts from database.
 		$related_posts = new WP_Query( array(
-			'tag__in' => $tag_ids,
+			'post_type'           => 'post',
+			'tag__in'             => $tag_ids,
 			'ignore_sticky_posts' => true,
-			'post__not_in' => array( $post_id ), // Exclude current viewed post.
-			'posts_per_page' => (int) $this->args['post_count'],
-			'orderby' => $this->args['order'],
-			)
-		);
+			'post__not_in'        => array( $post_id ), // Exclude current viewed post.
+			'posts_per_page'      => (int) $this->args['post_count'],
+			'orderby'             => $this->args['order'],
+		) );
 
 		return $related_posts;
 	}
@@ -303,25 +303,25 @@ class TZRP_Related_Posts {
 
 		// Get related posts from database.
 		$related_posts = new WP_Query( array(
+			'post_type'           => 'post',
 			'ignore_sticky_posts' => true,
-			'post__not_in' => array( $post_id ), // Exclude current viewed post.
-			'posts_per_page' => (int) $this->args['post_count'],
-			'orderby' => $this->args['order'],
-			'tax_query' => array(
+			'post__not_in'        => array( $post_id ), // Exclude current viewed post.
+			'posts_per_page'      => (int) $this->args['post_count'],
+			'orderby'             => $this->args['order'],
+			'tax_query'           => array(
 				'relation' => 'AND',
 				array(
 					'taxonomy' => 'category',
 					'field'    => 'term_id',
 					'terms'    => $category_ids,
-					),
+				),
 				array(
 					'taxonomy' => 'post_tag',
 					'field'    => 'term_id',
 					'terms'    => $tag_ids,
-					)
 				),
-			)
-		);
+			),
+		) );
 
 		return $related_posts;
 	}

@@ -65,7 +65,7 @@ if ( ! class_exists( 'ThemeZee_Related_Posts' ) ) :
 			define( 'TZRP_NAME', 'ThemeZee Related Posts' );
 
 			// Define Version Number.
-			define( 'TZRP_VERSION', '1.0.5' );
+			define( 'TZRP_VERSION', '1.0.6' );
 
 			// Define Plugin Name.
 			define( 'TZRP_PRODUCT_ID', 51298 );
