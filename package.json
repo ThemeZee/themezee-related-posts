@@ -1,0 +1,20 @@
+{
+  "name": "themezee-related-posts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"export": "git archive HEAD -9 --prefix themezee-related-posts/ --format=zip > ../../themezee-related-posts.zip"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThemeZee/themezee-related-posts.git"
+  },
+  "author": "",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ThemeZee/themezee-related-posts/issues"
+  },
+  "homepage": "https://github.com/ThemeZee/themezee-related-posts#readme"
+}
