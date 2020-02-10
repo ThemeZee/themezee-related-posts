@@ -23,6 +23,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function themezee_related_posts( $args = array() ) {
 
+	// Return early if it is not a single post.
+	if ( ! is_singular( 'post' ) ) {
+		return;
+	}
+
 	$related_posts = TZRP_Related_Posts::instance( $args );
 
 	return $related_posts->render();

@@ -4,7 +4,7 @@ Plugin URI: https://themezee.com/plugins/related-posts/
 Contributors: themezee
 Requires at least: 4.1
 Tested up to: 5.3
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 
 The *ThemeZee Related Posts* plugin is an easy way to display related posts on your website.
@@ -25,6 +25,10 @@ For detailed setup instructions, visit the official [Documentation](https://them
 3. For detailed setup instructions, visit the official [Documentation](https://themezee.com/docs/related-posts-documentation/) page
 
 == Changelog ==
+
+= 1.0.6 =
+
+* show related posts only on single posts not custom post types
 
 = 1.0.5 =
 

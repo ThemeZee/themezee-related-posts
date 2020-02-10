@@ -61,7 +61,7 @@ class TZRP_Related_Posts {
 	 *     @type string    $post_match     Matching method used to find related posts. categories|tags
 	 *     @type string    $order          Order type of related posts. date|comment_count|rand
 	 *     @type string    $title          Title displayed above related posts.
-	 *     @type string    $layout     	   Layout Style of Related posts. list|three-columns|four-columns
+	 *     @type string    $layout         Layout Style of Related posts. list|three-columns|four-columns
 	 *     @type string    $post_count     Maximum Number of related posts.
 	 *     @type bool      $echo           Whether to print or return the related posts.
 	 * }
@@ -71,21 +71,21 @@ class TZRP_Related_Posts {
 
 		// Get Related Posts Settings.
 		$instance = TZRP_Settings::instance();
-		$options = $instance->get_all();
+		$options  = $instance->get_all();
 
 		$defaults = array(
-			'before'          => '',
-			'after'           => '',
-			'container'       => 'section',
-			'class'           => '',
-			'post_match'  	  => $options['post_match'],
-			'order'           => $options['order'],
-			'before_title'    => '<h3>',
-			'title'	          => $options['title'],
-			'after_title'     => '</h3>',
-			'layout'	      => $options['layout'],
-			'post_count'      => $options['post_count'],
-			'echo'            => true,
+			'before'       => '',
+			'after'        => '',
+			'container'    => 'section',
+			'class'        => '',
+			'post_match'   => $options['post_match'],
+			'order'        => $options['order'],
+			'before_title' => '<h3>',
+			'title'        => $options['title'],
+			'after_title'  => '</h3>',
+			'layout'       => $options['layout'],
+			'post_count'   => $options['post_count'],
+			'echo'         => true,
 		);
 
 		// Parse the arguments with the defaults.

@@ -5,7 +5,7 @@ Plugin URI: https://themezee.com/plugins/related-posts/
 Description: This plugin is an easy way to display related posts on your website. Your visitors are introduced to other relevant content they might be interested in, which leads to an increase in traffic and reduced bounce rates.
 Author: ThemeZee
 Author URI: https://themezee.com/
-Version: 1.0.5
+Version: 1.0.6
 Text Domain: themezee-related-posts
 Domain Path: /languages/
 License: GNU General Public License v2 or later
@@ -210,9 +210,9 @@ if ( ! class_exists( 'ThemeZee_Related_Posts' ) ) :
 				return $content;
 			}
 
-			$content .= themezee_related_posts( array( 'echo' => false ) );
+			$related_posts = TZRP_Related_Posts::instance( array( 'echo' => false ) );
 
-			return $content;
+			return $content . $related_posts->render();
 		}
 
 		/**
