@@ -1,0 +1,17 @@
+{
+    "name": "themezee/themezee-related-posts",
+    "type": "wordpress-plugin",
+    "description": "This plugin is an easy way to display related posts on your website. Your visitors are introduced to other relevant content they might be interested in, which leads to an increase in traffic and reduced bounce rates.",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "ThemeZee",
+            "email": "contact@themezee.com",
+            "homepage": "https://themezee.com/",
+            "role": "Company"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    }
+}
